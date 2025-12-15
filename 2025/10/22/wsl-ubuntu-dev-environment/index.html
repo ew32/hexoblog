@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"ew32.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="WSL Ubuntu 24.04에서 Zsh 터미널과 Python 개발 환경을 구축하는 과정입니다. 📋 WSL 관리WSL 목록 조회1wsl --list --all  WSL 삭제1wsl --unregister Ubuntu-24.04  WSL 설치Microsoft Store에서 Ubuntu 24.04 설치  🔧 시스템 업데이트1sudo apt update &amp;a">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WSL Ubuntu 개발 환경 구축 (Zsh + Pyenv)">
+<meta property="og:url" content="http://ew32.github.io/2025/10/22/wsl-ubuntu-dev-environment/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="WSL Ubuntu 24.04에서 Zsh 터미널과 Python 개발 환경을 구축하는 과정입니다. 📋 WSL 관리WSL 목록 조회1wsl --list --all  WSL 삭제1wsl --unregister Ubuntu-24.04  WSL 설치Microsoft Store에서 Ubuntu 24.04 설치  🔧 시스템 업데이트1sudo apt update &amp;a">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-10-21T15:00:00.000Z">
+<meta property="article:modified_time" content="2025-12-15T13:41:09.263Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="Ubuntu">
+<meta property="article:tag" content="WSL">
+<meta property="article:tag" content="Zsh">
+<meta property="article:tag" content="Pyenv">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://ew32.github.io/2025/10/22/wsl-ubuntu-dev-environment/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>WSL Ubuntu 개발 환경 구축 (Zsh + Pyenv) | Hexo</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MB9340YWGS"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-MB9340YWGS');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hexo</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-list fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://ew32.github.io/2025/10/22/wsl-ubuntu-dev-environment/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          WSL Ubuntu 개발 환경 구축 (Zsh + Pyenv)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2025-10-22 00:00:00" itemprop="dateCreated datePublished" datetime="2025-10-22T00:00:00+09:00">2025-10-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-12-15 22:41:09" itemprop="dateModified" datetime="2025-12-15T22:41:09+09:00">2025-12-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%EA%B0%9C%EB%B0%9C%ED%99%98%EA%B2%BD/" itemprop="url" rel="index"><span itemprop="name">개발환경</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>WSL Ubuntu 24.04에서 Zsh 터미널과 Python 개발 환경을 구축하는 과정입니다.</p>
+<h2 id="📋-WSL-관리"><a href="#📋-WSL-관리" class="headerlink" title="📋 WSL 관리"></a>📋 WSL 관리</h2><h3 id="WSL-목록-조회"><a href="#WSL-목록-조회" class="headerlink" title="WSL 목록 조회"></a>WSL 목록 조회</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wsl --list --all</span><br></pre></td></tr></table></figure>
+
+<h3 id="WSL-삭제"><a href="#WSL-삭제" class="headerlink" title="WSL 삭제"></a>WSL 삭제</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wsl --unregister Ubuntu-24.04</span><br></pre></td></tr></table></figure>
+
+<h3 id="WSL-설치"><a href="#WSL-설치" class="headerlink" title="WSL 설치"></a>WSL 설치</h3><p>Microsoft Store에서 Ubuntu 24.04 설치</p>
+<hr>
+<h2 id="🔧-시스템-업데이트"><a href="#🔧-시스템-업데이트" class="headerlink" title="🔧 시스템 업데이트"></a>🔧 시스템 업데이트</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt update &amp;&amp; <span class="built_in">sudo</span> apt upgrade -y</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="🎨-Zsh-환경-구축"><a href="#🎨-Zsh-환경-구축" class="headerlink" title="🎨 Zsh 환경 구축"></a>🎨 Zsh 환경 구축</h2><h3 id="Zsh-설치"><a href="#Zsh-설치" class="headerlink" title="Zsh 설치"></a>Zsh 설치</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt install zsh -y</span><br></pre></td></tr></table></figure>
+
+<h3 id="Oh-My-Zsh-설치"><a href="#Oh-My-Zsh-설치" class="headerlink" title="Oh My Zsh 설치"></a>Oh My Zsh 설치</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh -c <span class="string">&quot;<span class="subst">$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Powerlevel10k-테마-설치"><a href="#Powerlevel10k-테마-설치" class="headerlink" title="Powerlevel10k 테마 설치"></a>Powerlevel10k 테마 설치</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> --depth=1 https://github.com/romkatv/powerlevel10k.git <span class="variable">$&#123;ZSH_CUSTOM:-<span class="variable">$HOME</span>/.oh-my-zsh/custom&#125;</span>/themes/powerlevel10k</span><br></pre></td></tr></table></figure>
+
+<h3 id="테마-적용"><a href="#테마-적용" class="headerlink" title="테마 적용"></a>테마 적용</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed -i <span class="string">&#x27;s|^ZSH_THEME=.*|ZSH_THEME=&quot;powerlevel10k/powerlevel10k&quot;|&#x27;</span> ~/.zshrc</span><br></pre></td></tr></table></figure>
+
+<h3 id="Git-및-fzf-설치"><a href="#Git-및-fzf-설치" class="headerlink" title="Git 및 fzf 설치"></a>Git 및 fzf 설치</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt install git fzf -y</span><br></pre></td></tr></table></figure>
+
+<h3 id="플러그인-설치"><a href="#플러그인-설치" class="headerlink" title="플러그인 설치"></a>플러그인 설치</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/zsh-users/zsh-autosuggestions <span class="variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/plugins/zsh-autosuggestions</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/zsh-users/zsh-syntax-highlighting.git <span class="variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/plugins/zsh-syntax-highlighting</span><br></pre></td></tr></table></figure>
+
+<h3 id="플러그인-활성화"><a href="#플러그인-활성화" class="headerlink" title="플러그인 활성화"></a>플러그인 활성화</h3><p><code>~/.zshrc</code> 파일에서 플러그인 설정:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plugins=(git zsh-autosuggestions zsh-syntax-highlighting)</span><br></pre></td></tr></table></figure>
+
+<h3 id="초기화-코드-추가"><a href="#초기화-코드-추가" class="headerlink" title="초기화 코드 추가"></a>초기화 코드 추가</h3><p>eval “$(zoxide init zsh)”</p>
+<h3 id="설정-적용"><a href="#설정-적용" class="headerlink" title="설정 적용"></a>설정 적용</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="🐍-Python-환경-구축-Pyenv"><a href="#🐍-Python-환경-구축-Pyenv" class="headerlink" title="🐍 Python 환경 구축 (Pyenv)"></a>🐍 Python 환경 구축 (Pyenv)</h2><h3 id="Pyenv-의존성-설치"><a href="#Pyenv-의존성-설치" class="headerlink" title="Pyenv 의존성 설치"></a>Pyenv 의존성 설치</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt install -y make build-essential libssl-dev zlib1g-dev \</span><br><span class="line">libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \</span><br><span class="line">libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev git</span><br></pre></td></tr></table></figure>
+
+<h3 id="Pyenv-설치"><a href="#Pyenv-설치" class="headerlink" title="Pyenv 설치"></a>Pyenv 설치</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl https://pyenv.run | bash</span><br></pre></td></tr></table></figure>
+
+<h3 id="Pyenv-환경-변수-설정"><a href="#Pyenv-환경-변수-설정" class="headerlink" title="Pyenv 환경 변수 설정"></a>Pyenv 환경 변수 설정</h3><p><code>~/.zshrc</code> 파일 끝에 추가:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> PATH=<span class="string">&quot;<span class="variable">$HOME</span>/.pyenv/bin:<span class="variable">$PATH</span>&quot;</span></span><br><span class="line"><span class="built_in">eval</span> <span class="string">&quot;<span class="subst">$(pyenv init --path)</span>&quot;</span></span><br><span class="line"><span class="built_in">eval</span> <span class="string">&quot;<span class="subst">$(pyenv init -)</span>&quot;</span></span><br><span class="line"><span class="built_in">eval</span> <span class="string">&quot;<span class="subst">$(pyenv virtualenv-init -)</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="설정-적용-1"><a href="#설정-적용-1" class="headerlink" title="설정 적용"></a>설정 적용</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br></pre></td></tr></table></figure>
+
+<h3 id="Python-3-11-9-설치"><a href="#Python-3-11-9-설치" class="headerlink" title="Python 3.11.9 설치"></a>Python 3.11.9 설치</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pyenv install 3.11.9</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="✅-완료"><a href="#✅-완료" class="headerlink" title="✅ 완료"></a>✅ 완료</h2><p>기본 개발 환경 구축이 완료되었습니다!</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Python/" rel="tag"># Python</a>
+              <a href="/tags/Ubuntu/" rel="tag"># Ubuntu</a>
+              <a href="/tags/WSL/" rel="tag"># WSL</a>
+              <a href="/tags/Zsh/" rel="tag"># Zsh</a>
+              <a href="/tags/Pyenv/" rel="tag"># Pyenv</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/07/20/cloud-computing-overview-md/" rel="prev" title="클라우드 컴퓨팅 개요">
+      <i class="fa fa-chevron-left"></i> 클라우드 컴퓨팅 개요
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/10/22/moneyprinter-installation/" rel="next" title="MoneyPrinter AI 비디오 생성 도구 설치">
+      MoneyPrinter AI 비디오 생성 도구 설치 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%8B-WSL-%EA%B4%80%EB%A6%AC"><span class="nav-number">1.</span> <span class="nav-text">📋 WSL 관리</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#WSL-%EB%AA%A9%EB%A1%9D-%EC%A1%B0%ED%9A%8C"><span class="nav-number">1.1.</span> <span class="nav-text">WSL 목록 조회</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WSL-%EC%82%AD%EC%A0%9C"><span class="nav-number">1.2.</span> <span class="nav-text">WSL 삭제</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WSL-%EC%84%A4%EC%B9%98"><span class="nav-number">1.3.</span> <span class="nav-text">WSL 설치</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%94%A7-%EC%8B%9C%EC%8A%A4%ED%85%9C-%EC%97%85%EB%8D%B0%EC%9D%B4%ED%8A%B8"><span class="nav-number">2.</span> <span class="nav-text">🔧 시스템 업데이트</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%8E%A8-Zsh-%ED%99%98%EA%B2%BD-%EA%B5%AC%EC%B6%95"><span class="nav-number">3.</span> <span class="nav-text">🎨 Zsh 환경 구축</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Zsh-%EC%84%A4%EC%B9%98"><span class="nav-number">3.1.</span> <span class="nav-text">Zsh 설치</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Oh-My-Zsh-%EC%84%A4%EC%B9%98"><span class="nav-number">3.2.</span> <span class="nav-text">Oh My Zsh 설치</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Powerlevel10k-%ED%85%8C%EB%A7%88-%EC%84%A4%EC%B9%98"><span class="nav-number">3.3.</span> <span class="nav-text">Powerlevel10k 테마 설치</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%ED%85%8C%EB%A7%88-%EC%A0%81%EC%9A%A9"><span class="nav-number">3.4.</span> <span class="nav-text">테마 적용</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Git-%EB%B0%8F-fzf-%EC%84%A4%EC%B9%98"><span class="nav-number">3.5.</span> <span class="nav-text">Git 및 fzf 설치</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%ED%94%8C%EB%9F%AC%EA%B7%B8%EC%9D%B8-%EC%84%A4%EC%B9%98"><span class="nav-number">3.6.</span> <span class="nav-text">플러그인 설치</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%ED%94%8C%EB%9F%AC%EA%B7%B8%EC%9D%B8-%ED%99%9C%EC%84%B1%ED%99%94"><span class="nav-number">3.7.</span> <span class="nav-text">플러그인 활성화</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EC%B4%88%EA%B8%B0%ED%99%94-%EC%BD%94%EB%93%9C-%EC%B6%94%EA%B0%80"><span class="nav-number">3.8.</span> <span class="nav-text">초기화 코드 추가</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EC%84%A4%EC%A0%95-%EC%A0%81%EC%9A%A9"><span class="nav-number">3.9.</span> <span class="nav-text">설정 적용</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%90%8D-Python-%ED%99%98%EA%B2%BD-%EA%B5%AC%EC%B6%95-Pyenv"><span class="nav-number">4.</span> <span class="nav-text">🐍 Python 환경 구축 (Pyenv)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Pyenv-%EC%9D%98%EC%A1%B4%EC%84%B1-%EC%84%A4%EC%B9%98"><span class="nav-number">4.1.</span> <span class="nav-text">Pyenv 의존성 설치</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Pyenv-%EC%84%A4%EC%B9%98"><span class="nav-number">4.2.</span> <span class="nav-text">Pyenv 설치</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Pyenv-%ED%99%98%EA%B2%BD-%EB%B3%80%EC%88%98-%EC%84%A4%EC%A0%95"><span class="nav-number">4.3.</span> <span class="nav-text">Pyenv 환경 변수 설정</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EC%84%A4%EC%A0%95-%EC%A0%81%EC%9A%A9-1"><span class="nav-number">4.4.</span> <span class="nav-text">설정 적용</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Python-3-11-9-%EC%84%A4%EC%B9%98"><span class="nav-number">4.5.</span> <span class="nav-text">Python 3.11.9 설치</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E2%9C%85-%EC%99%84%EB%A3%8C"><span class="nav-number">5.</span> <span class="nav-text">✅ 완료</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://plus.google.com/yourname" title="Google → https:&#x2F;&#x2F;plus.google.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-google fa-fw"></i>Google</a>
+      </span>
+  </div>
+
+
+
+<div class="sidebar-panel sidebar-panel-active">
+  <div class="sidebar-panel-container">
+    <div class="sidebar-panel-header">
+      <i class="fa fa-cloud"></i>
+      <span class="sidebar-panel-title">날씨 정보</span>
+    </div>
+    <div class="weather-widget" id="weather-widget">
+      <div class="weather-loading" id="weather-loading">
+        <i class="fa fa-spinner fa-spin"></i>
+        <span>날씨 정보를 불러오는 중...</span>
+      </div>
+      <div class="weather-content" id="weather-content" style="display: none;">
+        <div class="weather-location" id="weather-location">
+          <i class="fa fa-map-marker-alt"></i>
+          <span id="weather-location-text">위치 확인 중...</span>
+        </div>
+        <div class="weather-current">
+          <div class="weather-main">
+            <div class="weather-icon" id="weather-icon"></div>
+            <div class="weather-temp" id="weather-temp"></div>
+          </div>
+          <div class="weather-description" id="weather-description"></div>
+          <div class="weather-details">
+            <div class="weather-detail">
+              <i class="fa fa-tint"></i>
+              <span>습도: </span>
+              <span id="weather-humidity"></span>
+            </div>
+            <div class="weather-detail">
+              <i class="fa fa-wind"></i>
+              <span>풍속: </span>
+              <span id="weather-wind"></span>
+            </div>
+          </div>
+        </div>
+        <div class="weather-forecast" id="weather-forecast">
+          <div class="forecast-title">
+            <i class="fa fa-calendar-alt"></i>
+            <span>3일 예보</span>
+          </div>
+          <div class="forecast-list" id="forecast-list"></div>
+        </div>
+        <div class="weather-update" id="weather-update"></div>
+      </div>
+      <div class="weather-error" id="weather-error" style="display: none;">
+        <i class="fa fa-exclamation-triangle"></i>
+        <span>날씨 정보를 불러올 수 없습니다.</span>
+      </div>
+    </div>
+  </div>
+</div>
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+// 날씨 위젯 초기화
+document.addEventListener('DOMContentLoaded', function() {
+  initWeatherWidget();
+});
+
+function initWeatherWidget() {
+  // 위치 정보를 가져와서 날씨 정보 표시
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      function(position) {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+        fetchWeatherByCoords(lat, lon);
+      },
+      function(error) {
+        console.log('위치 정보를 가져올 수 없습니다:', error);
+        // 기본값으로 서울 날씨 표시
+        fetchWeatherByCity('Seoul');
+      }
+    );
+  } else {
+    console.log('브라우저가 위치 정보를 지원하지 않습니다.');
+    // 기본값으로 서울 날씨 표시
+    fetchWeatherByCity('Seoul');
+  }
+}
+
+function fetchWeatherByCoords(lat, lon) {
+  // Open-Meteo API - 현재 날씨와 3일 예보 포함
+  const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&daily=temperature_2m_max,temperature_2m_min,weather_code&timezone=Asia/Seoul&forecast_days=4`;
+  
+  // 위치 정보 가져오기 (역지오코딩)
+  const geocodingUrl = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=ko`;
+  
+  Promise.all([
+    fetch(apiUrl).then(response => response.json()),
+    fetch(geocodingUrl).then(response => response.json())
+  ])
+    .then(([weatherData, locationData]) => {
+      displayWeather(weatherData, locationData);
+    })
+    .catch(error => {
+      console.error('날씨 정보를 가져오는데 실패했습니다:', error);
+      showWeatherError();
+    });
+}
+
+function fetchWeatherByCity(city) {
+  // 서울의 좌표로 기본 날씨 정보 가져오기
+  const lat = 37.5665;
+  const lon = 126.9780;
+  fetchWeatherByCoords(lat, lon);
+}
+
+function displayWeather(weatherData, locationData) {
+  const current = weatherData.current_weather;
+  const daily = weatherData.daily;
+  const loading = document.getElementById('weather-loading');
+  const content = document.getElementById('weather-content');
+  const error = document.getElementById('weather-error');
+  
+  if (!current) {
+    showWeatherError();
+    return;
+  }
+
+  // 로딩 숨기기, 콘텐츠 표시
+  loading.style.display = 'none';
+  error.style.display = 'none';
+  content.style.display = 'block';
+
+  // 위치 정보 표시
+  const locationText = getLocationText(locationData);
+  document.getElementById('weather-location-text').textContent = locationText;
+  
+  // 현재 날씨
+  document.getElementById('weather-temp').textContent = Math.round(current.temperature) + '°C';
+  
+  const weatherIcon = getWeatherIcon(current.weathercode, current.is_day);
+  document.getElementById('weather-icon').innerHTML = weatherIcon;
+  
+  const description = getWeatherDescription(current.weathercode);
+  document.getElementById('weather-description').textContent = description;
+  
+  document.getElementById('weather-wind').textContent = current.windspeed + ' km/h';
+  document.getElementById('weather-humidity').textContent = 'N/A';
+  
+  // 3일 예보 표시
+  displayForecast(daily);
+  
+  // 업데이트 시간
+  const updateTime = new Date().toLocaleTimeString('ko-KR');
+  document.getElementById('weather-update').textContent = `최종 업데이트: ${updateTime}`;
+}
+
+function getWeatherIcon(weatherCode, isDay) {
+  // WMO Weather Code를 기반으로 아이콘 반환
+  const iconMap = {
+    0: isDay ? '☀️' : '🌙', // Clear sky
+    1: isDay ? '🌤️' : '🌙', // Mainly clear
+    2: '⛅', // Partly cloudy
+    3: '☁️', // Overcast
+    45: '🌫️', // Fog
+    48: '🌫️', // Depositing rime fog
+    51: '🌦️', // Light drizzle
+    53: '🌦️', // Moderate drizzle
+    55: '🌦️', // Dense drizzle
+    61: '🌧️', // Slight rain
+    63: '🌧️', // Moderate rain
+    65: '🌧️', // Heavy rain
+    71: '🌨️', // Slight snow
+    73: '🌨️', // Moderate snow
+    75: '🌨️', // Heavy snow
+    77: '❄️', // Snow grains
+    80: '🌦️', // Slight rain showers
+    81: '🌧️', // Moderate rain showers
+    82: '🌧️', // Violent rain showers
+    85: '🌨️', // Slight snow showers
+    86: '🌨️', // Heavy snow showers
+    95: '⛈️', // Thunderstorm
+    96: '⛈️', // Thunderstorm with slight hail
+    99: '⛈️'  // Thunderstorm with heavy hail
+  };
+  
+  return iconMap[weatherCode] || '❓';
+}
+
+function getWeatherDescription(weatherCode) {
+  const descriptionMap = {
+    0: '맑음',
+    1: '대체로 맑음',
+    2: '부분적으로 흐림',
+    3: '흐림',
+    45: '안개',
+    48: '서리 안개',
+    51: '가벼운 이슬비',
+    53: '보통 이슬비',
+    55: '진한 이슬비',
+    61: '약한 비',
+    63: '보통 비',
+    65: '강한 비',
+    71: '약한 눈',
+    73: '보통 눈',
+    75: '강한 눈',
+    77: '눈알갱이',
+    80: '약한 소나기',
+    81: '보통 소나기',
+    82: '강한 소나기',
+    85: '약한 눈 소나기',
+    86: '강한 눈 소나기',
+    95: '뇌우',
+    96: '약한 우박을 동반한 뇌우',
+    99: '강한 우박을 동반한 뇌우'
+  };
+  
+  return descriptionMap[weatherCode] || '알 수 없음';
+}
+
+function getLocationText(locationData) {
+  if (!locationData) return '현재 위치';
+  
+  // 한국어 위치 정보 조합
+  let location = '';
+  if (locationData.city) {
+    location = locationData.city;
+  } else if (locationData.locality) {
+    location = locationData.locality;
+  } else if (locationData.countryName) {
+    location = locationData.countryName;
+  }
+  
+  // 구/군 정보 추가
+  if (locationData.principalSubdivision && location !== locationData.principalSubdivision) {
+    location = `${locationData.principalSubdivision} ${location}`;
+  }
+  
+  return location || '현재 위치';
+}
+
+function displayForecast(daily) {
+  if (!daily || !daily.time || daily.time.length < 4) return;
+  
+  const forecastList = document.getElementById('forecast-list');
+  forecastList.innerHTML = '';
+  
+  // 오늘 제외하고 3일간 예보 표시 (인덱스 1, 2, 3)
+  for (let i = 1; i <= 3; i++) {
+    const date = new Date(daily.time[i]);
+    const dayName = getDayName(date);
+    const weatherCode = daily.weather_code[i];
+    const maxTemp = Math.round(daily.temperature_2m_max[i]);
+    const minTemp = Math.round(daily.temperature_2m_min[i]);
+    
+    const forecastItem = document.createElement('div');
+    forecastItem.className = 'forecast-item';
+    
+    forecastItem.innerHTML = `
+      <div class="forecast-day">${dayName}</div>
+      <div class="forecast-weather">
+        <div class="forecast-icon">${getWeatherIcon(weatherCode, true)}</div>
+        <div class="forecast-desc">${getWeatherDescription(weatherCode)}</div>
+      </div>
+      <div class="forecast-temps">
+        <span class="temp-high">${maxTemp}°</span>
+        <span class="temp-low">${minTemp}°</span>
+      </div>
+    `;
+    
+    forecastList.appendChild(forecastItem);
+  }
+}
+
+function getDayName(date) {
+  const today = new Date();
+  const tomorrow = new Date(today);
+  tomorrow.setDate(today.getDate() + 1);
+  
+  if (date.toDateString() === today.toDateString()) {
+    return '오늘';
+  } else if (date.toDateString() === tomorrow.toDateString()) {
+    return '내일';
+  } else {
+    const days = ['일', '월', '화', '수', '목', '금', '토'];
+    return days[date.getDay()] + '요일';
+  }
+}
+
+function showWeatherError() {
+  const loading = document.getElementById('weather-loading');
+  const content = document.getElementById('weather-content');
+  const error = document.getElementById('weather-error');
+  
+  loading.style.display = 'none';
+  content.style.display = 'none';
+  error.style.display = 'block';
+}
+</script>
+</body>
+</html>

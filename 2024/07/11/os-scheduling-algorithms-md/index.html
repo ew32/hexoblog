@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"ew32.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="OS 스케줄링운영 체제(OS, Operating System) 스케줄링은 시스템의 자원을 효율적으로 사용하고, 사용자에게 공정한 서비스 제공을 목적으로 프로세스나 스레드의 실행 순서를 결정하는 방법이다. 스케줄링 알고리즘은 CPU, 메모리, 디스크 I&#x2F;O 등의 자원을 어떤 순서로 할당할지를 결정한다. 스케줄링의 목표 효율성: 자원의 최대한 활용 공">
+<meta property="og:type" content="article">
+<meta property="og:title" content="운영체제 스케줄링 알고리즘">
+<meta property="og:url" content="http://ew32.github.io/2024/07/11/os-scheduling-algorithms-md/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="OS 스케줄링운영 체제(OS, Operating System) 스케줄링은 시스템의 자원을 효율적으로 사용하고, 사용자에게 공정한 서비스 제공을 목적으로 프로세스나 스레드의 실행 순서를 결정하는 방법이다. 스케줄링 알고리즘은 CPU, 메모리, 디스크 I&#x2F;O 등의 자원을 어떤 순서로 할당할지를 결정한다. 스케줄링의 목표 효율성: 자원의 최대한 활용 공">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-07-10T15:59:17.000Z">
+<meta property="article:modified_time" content="2025-08-27T13:04:49.458Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="운영체제">
+<meta property="article:tag" content="스케줄링">
+<meta property="article:tag" content="알고리즘">
+<meta property="article:tag" content="CPU">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://ew32.github.io/2024/07/11/os-scheduling-algorithms-md/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>운영체제 스케줄링 알고리즘 | Hexo</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MB9340YWGS"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-MB9340YWGS');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hexo</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-list fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://ew32.github.io/2024/07/11/os-scheduling-algorithms-md/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          운영체제 스케줄링 알고리즘
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-07-11 00:59:17" itemprop="dateCreated datePublished" datetime="2024-07-11T00:59:17+09:00">2024-07-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-27 22:04:49" itemprop="dateModified" datetime="2025-08-27T22:04:49+09:00">2025-08-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/System/" itemprop="url" rel="index"><span itemprop="name">System</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/System/OS/" itemprop="url" rel="index"><span itemprop="name">OS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="OS-스케줄링"><a href="#OS-스케줄링" class="headerlink" title="OS 스케줄링"></a>OS 스케줄링</h1><p>운영 체제(OS, Operating System) 스케줄링은 시스템의 자원을 효율적으로 사용하고, 사용자에게 공정한 서비스 제공을 목적으로 프로세스나 스레드의 실행 순서를 결정하는 방법이다. 스케줄링 알고리즘은 CPU, 메모리, 디스크 I&#x2F;O 등의 자원을 어떤 순서로 할당할지를 결정한다.</p>
+<h2 id="스케줄링의-목표"><a href="#스케줄링의-목표" class="headerlink" title="스케줄링의 목표"></a>스케줄링의 목표</h2><ul>
+<li><strong>효율성</strong>: 자원의 최대한 활용</li>
+<li><strong>공정성</strong>: 모든 프로세스가 공정하게 자원을 사용할 수 있도록 보장</li>
+<li><strong>응답 시간 최소화</strong>: 사용자에게 빠른 응답 시간 제공</li>
+<li><strong>처리량 최대화</strong>: 주어진 시간 내에 최대한 많은 작업 처리</li>
+<li><strong>대기 시간 최소화</strong>: 프로세스가 대기하는 시간을 최소화</li>
+<li><strong>우선순위 보장</strong>: 중요하거나 우선순위가 높은 작업을 먼저 처리</li>
+</ul>
+<h2 id="스케줄링의-종류"><a href="#스케줄링의-종류" class="headerlink" title="스케줄링의 종류"></a>스케줄링의 종류</h2><h3 id="1-선점형-스케줄링-Preemptive-Scheduling"><a href="#1-선점형-스케줄링-Preemptive-Scheduling" class="headerlink" title="1. 선점형 스케줄링 (Preemptive Scheduling)"></a>1. 선점형 스케줄링 (Preemptive Scheduling)</h3><p>운영 체제가 프로세스를 강제로 중단시키고 다른 프로세스로 교체할 수 있는 스케줄링 방법.</p>
+<ul>
+<li><strong>라운드 로빈 (Round Robin)</strong>: 각 프로세스는 동일한 시간 할당을 받아 실행되고, 할당 시간이 끝나면 다음 프로세스로 교체된다.</li>
+<li><strong>SRT (Shortest Remaining Time)</strong>: 남은 실행 시간이 가장 짧은 프로세스를 우선 실행한다.</li>
+<li><strong>다단계 큐 (Multilevel Queue)</strong>: 프로세스를 여러 우선순위 큐로 나누어 각각의 큐에서 독립적으로 스케줄링한다.</li>
+<li><strong>다단계 피드백 큐 (Multilevel Feedback Queue)</strong>: 프로세스가 CPU를 많이 사용하면 낮은 우선순위 큐로 이동시키고, 적게 사용하면 높은 우선순위 큐로 이동시킨다.</li>
+</ul>
+<h3 id="2-비선점형-스케줄링-Non-preemptive-Scheduling"><a href="#2-비선점형-스케줄링-Non-preemptive-Scheduling" class="headerlink" title="2. 비선점형 스케줄링 (Non-preemptive Scheduling)"></a>2. 비선점형 스케줄링 (Non-preemptive Scheduling)</h3><p>프로세스가 자발적으로 CPU를 반환할 때까지 실행을 계속하는 스케줄링 방법.</p>
+<ul>
+<li><strong>FCFS (First-Come, First-Served)</strong>: 먼저 도착한 프로세스를 먼저 실행한다.</li>
+<li><strong>SJF (Shortest Job First)</strong>: 실행 시간이 가장 짧은 프로세스를 먼저 실행한다.</li>
+<li><strong>우선순위 스케줄링 (Priority Scheduling)</strong>: 우선순위가 높은 프로세스를 먼저 실행한다.</li>
+<li><strong>HRRN (Highest Response Ratio Next)</strong>: 응답률이 가장 높은 프로세스를 먼저 실행한다.</li>
+</ul>
+<h2 id="컨텍스트-스위칭-오버헤드"><a href="#컨텍스트-스위칭-오버헤드" class="headerlink" title="컨텍스트 스위칭 오버헤드"></a>컨텍스트 스위칭 오버헤드</h2><p>컨텍스트 스위칭은 CPU가 현재 실행 중인 프로세스의 상태(컨텍스트)를 저장하고, 다른 프로세스의 상태를 불러오는 작업이다. 이 과정은 다음과 같은 단계를 포함한다:</p>
+<ol>
+<li>현재 실행 중인 프로세스의 레지스터와 프로그램 카운터 값을 저장</li>
+<li>다른 프로세스의 저장된 레지스터와 프로그램 카운터 값을 복원</li>
+<li>메모리 매핑 테이블 등의 시스템 자원을 새 프로세스에 맞게 조정</li>
+</ol>
+<p>컨텍스트 스위칭 오버헤드는 이 과정에서 발생하는 시간 및 자원 소모를 의미한다. 잦은 컨텍스트 스위칭은 시스템 성능을 저하시킬 수 있다. 특히, 다음과 같은 이유로 오버헤드가 발생한다:</p>
+<ul>
+<li><strong>CPU 레지스터 저장 및 복원</strong>: 레지스터를 저장하고 복원하는 작업이 빈번하게 발생</li>
+<li><strong>캐시 미스 증가</strong>: 프로세스 전환 시 캐시 메모리에 저장된 데이터가 무효화되어 캐시 미스가 증가</li>
+<li><strong>메모리 매핑 테이블 업데이트</strong>: 메모리 관리 유닛(MMU)의 테이블을 새 프로세스에 맞게 업데이트</li>
+</ul>
+<h2 id="스케줄링-알고리즘-비교"><a href="#스케줄링-알고리즘-비교" class="headerlink" title="스케줄링 알고리즘 비교"></a>스케줄링 알고리즘 비교</h2><table>
+<thead>
+<tr>
+<th>알고리즘</th>
+<th>선점형&#x2F;비선점형</th>
+<th>장점</th>
+<th>단점</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>FCFS</td>
+<td>비선점형</td>
+<td>구현이 간단하고 공정함</td>
+<td>대기 시간이 길어질 수 있음</td>
+</tr>
+<tr>
+<td>SJF</td>
+<td>비선점형</td>
+<td>평균 대기 시간이 최소화됨</td>
+<td>실행 시간을 미리 알기 어려움</td>
+</tr>
+<tr>
+<td>Priority Scheduling</td>
+<td>비선점형</td>
+<td>중요한 작업을 우선 처리</td>
+<td>기아 현상이 발생할 수 있음</td>
+</tr>
+<tr>
+<td>Round Robin</td>
+<td>선점형</td>
+<td>응답 시간이 일정하고 공정함</td>
+<td>컨텍스트 스위칭 오버헤드가 있음</td>
+</tr>
+<tr>
+<td>SRT</td>
+<td>선점형</td>
+<td>짧은 작업이 빨리 끝남</td>
+<td>컨텍스트 스위칭 오버헤드가 있음</td>
+</tr>
+<tr>
+<td>Multilevel Queue</td>
+<td>선점형</td>
+<td>우선순위에 따라 작업을 분리하여 처리</td>
+<td>특정 큐에 작업이 몰릴 수 있음</td>
+</tr>
+<tr>
+<td>Multilevel Feedback Queue</td>
+<td>선점형</td>
+<td>다양한 작업 특성에 대응 가능</td>
+<td>구현이 복잡하고 컨텍스트 스위칭 오버헤드가 있음</td>
+</tr>
+</tbody></table>
+<p>각 스케줄링 알고리즘은 시스템의 목표와 상황에 따라 적절하게 선택되어야 한다.</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C/" rel="tag"># 운영체제</a>
+              <a href="/tags/%EC%8A%A4%EC%BC%80%EC%A4%84%EB%A7%81/" rel="tag"># 스케줄링</a>
+              <a href="/tags/%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98/" rel="tag"># 알고리즘</a>
+              <a href="/tags/CPU/" rel="tag"># CPU</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/07/10/osi-7-layer-model-md/" rel="prev" title="OSI 7 계층 모델">
+      <i class="fa fa-chevron-left"></i> OSI 7 계층 모델
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/07/16/difference-between-get-and-post-md/" rel="next" title="HTTP GET과 POST의 차이점">
+      HTTP GET과 POST의 차이점 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#OS-%EC%8A%A4%EC%BC%80%EC%A4%84%EB%A7%81"><span class="nav-number">1.</span> <span class="nav-text">OS 스케줄링</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%EC%8A%A4%EC%BC%80%EC%A4%84%EB%A7%81%EC%9D%98-%EB%AA%A9%ED%91%9C"><span class="nav-number">1.1.</span> <span class="nav-text">스케줄링의 목표</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EC%8A%A4%EC%BC%80%EC%A4%84%EB%A7%81%EC%9D%98-%EC%A2%85%EB%A5%98"><span class="nav-number">1.2.</span> <span class="nav-text">스케줄링의 종류</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%EC%84%A0%EC%A0%90%ED%98%95-%EC%8A%A4%EC%BC%80%EC%A4%84%EB%A7%81-Preemptive-Scheduling"><span class="nav-number">1.2.1.</span> <span class="nav-text">1. 선점형 스케줄링 (Preemptive Scheduling)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%EB%B9%84%EC%84%A0%EC%A0%90%ED%98%95-%EC%8A%A4%EC%BC%80%EC%A4%84%EB%A7%81-Non-preemptive-Scheduling"><span class="nav-number">1.2.2.</span> <span class="nav-text">2. 비선점형 스케줄링 (Non-preemptive Scheduling)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EC%BB%A8%ED%85%8D%EC%8A%A4%ED%8A%B8-%EC%8A%A4%EC%9C%84%EC%B9%AD-%EC%98%A4%EB%B2%84%ED%97%A4%EB%93%9C"><span class="nav-number">1.3.</span> <span class="nav-text">컨텍스트 스위칭 오버헤드</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EC%8A%A4%EC%BC%80%EC%A4%84%EB%A7%81-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98-%EB%B9%84%EA%B5%90"><span class="nav-number">1.4.</span> <span class="nav-text">스케줄링 알고리즘 비교</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://plus.google.com/yourname" title="Google → https:&#x2F;&#x2F;plus.google.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-google fa-fw"></i>Google</a>
+      </span>
+  </div>
+
+
+
+<div class="sidebar-panel sidebar-panel-active">
+  <div class="sidebar-panel-container">
+    <div class="sidebar-panel-header">
+      <i class="fa fa-cloud"></i>
+      <span class="sidebar-panel-title">날씨 정보</span>
+    </div>
+    <div class="weather-widget" id="weather-widget">
+      <div class="weather-loading" id="weather-loading">
+        <i class="fa fa-spinner fa-spin"></i>
+        <span>날씨 정보를 불러오는 중...</span>
+      </div>
+      <div class="weather-content" id="weather-content" style="display: none;">
+        <div class="weather-location" id="weather-location">
+          <i class="fa fa-map-marker-alt"></i>
+          <span id="weather-location-text">위치 확인 중...</span>
+        </div>
+        <div class="weather-current">
+          <div class="weather-main">
+            <div class="weather-icon" id="weather-icon"></div>
+            <div class="weather-temp" id="weather-temp"></div>
+          </div>
+          <div class="weather-description" id="weather-description"></div>
+          <div class="weather-details">
+            <div class="weather-detail">
+              <i class="fa fa-tint"></i>
+              <span>습도: </span>
+              <span id="weather-humidity"></span>
+            </div>
+            <div class="weather-detail">
+              <i class="fa fa-wind"></i>
+              <span>풍속: </span>
+              <span id="weather-wind"></span>
+            </div>
+          </div>
+        </div>
+        <div class="weather-forecast" id="weather-forecast">
+          <div class="forecast-title">
+            <i class="fa fa-calendar-alt"></i>
+            <span>3일 예보</span>
+          </div>
+          <div class="forecast-list" id="forecast-list"></div>
+        </div>
+        <div class="weather-update" id="weather-update"></div>
+      </div>
+      <div class="weather-error" id="weather-error" style="display: none;">
+        <i class="fa fa-exclamation-triangle"></i>
+        <span>날씨 정보를 불러올 수 없습니다.</span>
+      </div>
+    </div>
+  </div>
+</div>
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+// 날씨 위젯 초기화
+document.addEventListener('DOMContentLoaded', function() {
+  initWeatherWidget();
+});
+
+function initWeatherWidget() {
+  // 위치 정보를 가져와서 날씨 정보 표시
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      function(position) {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+        fetchWeatherByCoords(lat, lon);
+      },
+      function(error) {
+        console.log('위치 정보를 가져올 수 없습니다:', error);
+        // 기본값으로 서울 날씨 표시
+        fetchWeatherByCity('Seoul');
+      }
+    );
+  } else {
+    console.log('브라우저가 위치 정보를 지원하지 않습니다.');
+    // 기본값으로 서울 날씨 표시
+    fetchWeatherByCity('Seoul');
+  }
+}
+
+function fetchWeatherByCoords(lat, lon) {
+  // Open-Meteo API - 현재 날씨와 3일 예보 포함
+  const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&daily=temperature_2m_max,temperature_2m_min,weather_code&timezone=Asia/Seoul&forecast_days=4`;
+  
+  // 위치 정보 가져오기 (역지오코딩)
+  const geocodingUrl = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=ko`;
+  
+  Promise.all([
+    fetch(apiUrl).then(response => response.json()),
+    fetch(geocodingUrl).then(response => response.json())
+  ])
+    .then(([weatherData, locationData]) => {
+      displayWeather(weatherData, locationData);
+    })
+    .catch(error => {
+      console.error('날씨 정보를 가져오는데 실패했습니다:', error);
+      showWeatherError();
+    });
+}
+
+function fetchWeatherByCity(city) {
+  // 서울의 좌표로 기본 날씨 정보 가져오기
+  const lat = 37.5665;
+  const lon = 126.9780;
+  fetchWeatherByCoords(lat, lon);
+}
+
+function displayWeather(weatherData, locationData) {
+  const current = weatherData.current_weather;
+  const daily = weatherData.daily;
+  const loading = document.getElementById('weather-loading');
+  const content = document.getElementById('weather-content');
+  const error = document.getElementById('weather-error');
+  
+  if (!current) {
+    showWeatherError();
+    return;
+  }
+
+  // 로딩 숨기기, 콘텐츠 표시
+  loading.style.display = 'none';
+  error.style.display = 'none';
+  content.style.display = 'block';
+
+  // 위치 정보 표시
+  const locationText = getLocationText(locationData);
+  document.getElementById('weather-location-text').textContent = locationText;
+  
+  // 현재 날씨
+  document.getElementById('weather-temp').textContent = Math.round(current.temperature) + '°C';
+  
+  const weatherIcon = getWeatherIcon(current.weathercode, current.is_day);
+  document.getElementById('weather-icon').innerHTML = weatherIcon;
+  
+  const description = getWeatherDescription(current.weathercode);
+  document.getElementById('weather-description').textContent = description;
+  
+  document.getElementById('weather-wind').textContent = current.windspeed + ' km/h';
+  document.getElementById('weather-humidity').textContent = 'N/A';
+  
+  // 3일 예보 표시
+  displayForecast(daily);
+  
+  // 업데이트 시간
+  const updateTime = new Date().toLocaleTimeString('ko-KR');
+  document.getElementById('weather-update').textContent = `최종 업데이트: ${updateTime}`;
+}
+
+function getWeatherIcon(weatherCode, isDay) {
+  // WMO Weather Code를 기반으로 아이콘 반환
+  const iconMap = {
+    0: isDay ? '☀️' : '🌙', // Clear sky
+    1: isDay ? '🌤️' : '🌙', // Mainly clear
+    2: '⛅', // Partly cloudy
+    3: '☁️', // Overcast
+    45: '🌫️', // Fog
+    48: '🌫️', // Depositing rime fog
+    51: '🌦️', // Light drizzle
+    53: '🌦️', // Moderate drizzle
+    55: '🌦️', // Dense drizzle
+    61: '🌧️', // Slight rain
+    63: '🌧️', // Moderate rain
+    65: '🌧️', // Heavy rain
+    71: '🌨️', // Slight snow
+    73: '🌨️', // Moderate snow
+    75: '🌨️', // Heavy snow
+    77: '❄️', // Snow grains
+    80: '🌦️', // Slight rain showers
+    81: '🌧️', // Moderate rain showers
+    82: '🌧️', // Violent rain showers
+    85: '🌨️', // Slight snow showers
+    86: '🌨️', // Heavy snow showers
+    95: '⛈️', // Thunderstorm
+    96: '⛈️', // Thunderstorm with slight hail
+    99: '⛈️'  // Thunderstorm with heavy hail
+  };
+  
+  return iconMap[weatherCode] || '❓';
+}
+
+function getWeatherDescription(weatherCode) {
+  const descriptionMap = {
+    0: '맑음',
+    1: '대체로 맑음',
+    2: '부분적으로 흐림',
+    3: '흐림',
+    45: '안개',
+    48: '서리 안개',
+    51: '가벼운 이슬비',
+    53: '보통 이슬비',
+    55: '진한 이슬비',
+    61: '약한 비',
+    63: '보통 비',
+    65: '강한 비',
+    71: '약한 눈',
+    73: '보통 눈',
+    75: '강한 눈',
+    77: '눈알갱이',
+    80: '약한 소나기',
+    81: '보통 소나기',
+    82: '강한 소나기',
+    85: '약한 눈 소나기',
+    86: '강한 눈 소나기',
+    95: '뇌우',
+    96: '약한 우박을 동반한 뇌우',
+    99: '강한 우박을 동반한 뇌우'
+  };
+  
+  return descriptionMap[weatherCode] || '알 수 없음';
+}
+
+function getLocationText(locationData) {
+  if (!locationData) return '현재 위치';
+  
+  // 한국어 위치 정보 조합
+  let location = '';
+  if (locationData.city) {
+    location = locationData.city;
+  } else if (locationData.locality) {
+    location = locationData.locality;
+  } else if (locationData.countryName) {
+    location = locationData.countryName;
+  }
+  
+  // 구/군 정보 추가
+  if (locationData.principalSubdivision && location !== locationData.principalSubdivision) {
+    location = `${locationData.principalSubdivision} ${location}`;
+  }
+  
+  return location || '현재 위치';
+}
+
+function displayForecast(daily) {
+  if (!daily || !daily.time || daily.time.length < 4) return;
+  
+  const forecastList = document.getElementById('forecast-list');
+  forecastList.innerHTML = '';
+  
+  // 오늘 제외하고 3일간 예보 표시 (인덱스 1, 2, 3)
+  for (let i = 1; i <= 3; i++) {
+    const date = new Date(daily.time[i]);
+    const dayName = getDayName(date);
+    const weatherCode = daily.weather_code[i];
+    const maxTemp = Math.round(daily.temperature_2m_max[i]);
+    const minTemp = Math.round(daily.temperature_2m_min[i]);
+    
+    const forecastItem = document.createElement('div');
+    forecastItem.className = 'forecast-item';
+    
+    forecastItem.innerHTML = `
+      <div class="forecast-day">${dayName}</div>
+      <div class="forecast-weather">
+        <div class="forecast-icon">${getWeatherIcon(weatherCode, true)}</div>
+        <div class="forecast-desc">${getWeatherDescription(weatherCode)}</div>
+      </div>
+      <div class="forecast-temps">
+        <span class="temp-high">${maxTemp}°</span>
+        <span class="temp-low">${minTemp}°</span>
+      </div>
+    `;
+    
+    forecastList.appendChild(forecastItem);
+  }
+}
+
+function getDayName(date) {
+  const today = new Date();
+  const tomorrow = new Date(today);
+  tomorrow.setDate(today.getDate() + 1);
+  
+  if (date.toDateString() === today.toDateString()) {
+    return '오늘';
+  } else if (date.toDateString() === tomorrow.toDateString()) {
+    return '내일';
+  } else {
+    const days = ['일', '월', '화', '수', '목', '금', '토'];
+    return days[date.getDay()] + '요일';
+  }
+}
+
+function showWeatherError() {
+  const loading = document.getElementById('weather-loading');
+  const content = document.getElementById('weather-content');
+  const error = document.getElementById('weather-error');
+  
+  loading.style.display = 'none';
+  content.style.display = 'none';
+  error.style.display = 'block';
+}
+</script>
+</body>
+</html>

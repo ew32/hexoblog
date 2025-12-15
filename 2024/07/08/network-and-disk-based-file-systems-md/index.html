@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"ew32.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="네트워크 기반 파일 시스템(Network-based File System)네트워크 기반 파일 시스템은 파일이 로컬 디스크가 아닌 네트워크에 연결된 서버에 저장되는 시스템입니다. 사용자와 애플리케이션은 파일이 로컬에 있는 것처럼 접근할 수 있지만 실제 파일은 네트워크를 통해 접근됩니다. 대표적인 네트워크 기반 파일 시스템으로는 NFS(Network File">
+<meta property="og:type" content="article">
+<meta property="og:title" content="네트워크 및 디스크 기반 파일 시스템">
+<meta property="og:url" content="http://ew32.github.io/2024/07/08/network-and-disk-based-file-systems-md/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="네트워크 기반 파일 시스템(Network-based File System)네트워크 기반 파일 시스템은 파일이 로컬 디스크가 아닌 네트워크에 연결된 서버에 저장되는 시스템입니다. 사용자와 애플리케이션은 파일이 로컬에 있는 것처럼 접근할 수 있지만 실제 파일은 네트워크를 통해 접근됩니다. 대표적인 네트워크 기반 파일 시스템으로는 NFS(Network File">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-07-08T12:42:12.000Z">
+<meta property="article:modified_time" content="2025-08-27T13:12:00.383Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="파일시스템">
+<meta property="article:tag" content="NFS">
+<meta property="article:tag" content="NTFS">
+<meta property="article:tag" content="스토리지">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://ew32.github.io/2024/07/08/network-and-disk-based-file-systems-md/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>네트워크 및 디스크 기반 파일 시스템 | Hexo</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MB9340YWGS"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-MB9340YWGS');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hexo</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-list fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://ew32.github.io/2024/07/08/network-and-disk-based-file-systems-md/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          네트워크 및 디스크 기반 파일 시스템
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-07-08 21:42:12" itemprop="dateCreated datePublished" datetime="2024-07-08T21:42:12+09:00">2024-07-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-27 22:12:00" itemprop="dateModified" datetime="2025-08-27T22:12:00+09:00">2025-08-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/System/" itemprop="url" rel="index"><span itemprop="name">System</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/System/Storage/" itemprop="url" rel="index"><span itemprop="name">Storage</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="네트워크-기반-파일-시스템-Network-based-File-System"><a href="#네트워크-기반-파일-시스템-Network-based-File-System" class="headerlink" title="네트워크 기반 파일 시스템(Network-based File System)"></a>네트워크 기반 파일 시스템(Network-based File System)</h2><p>네트워크 기반 파일 시스템은 파일이 로컬 디스크가 아닌 네트워크에 연결된 서버에 저장되는 시스템입니다. 사용자와 애플리케이션은 파일이 로컬에 있는 것처럼 접근할 수 있지만 실제 파일은 네트워크를 통해 접근됩니다. 대표적인 네트워크 기반 파일 시스템으로는 NFS(Network File System), SMB(Server Message Block), 그리고 DFS(Distributed File System) 등이 있습니다.</p>
+<h3 id="주요-특징"><a href="#주요-특징" class="headerlink" title="주요 특징"></a>주요 특징</h3><ul>
+<li><strong>중앙 집중식 저장</strong>: 모든 파일이 중앙 서버에 저장되어 관리가 용이합니다.</li>
+<li><strong>데이터 공유</strong>: 여러 클라이언트가 같은 파일을 공유할 수 있어 협업이 용이합니다.</li>
+<li><strong>확장성</strong>: 스토리지 용량을 쉽게 확장할 수 있습니다.</li>
+</ul>
+<h2 id="디스크-기반-파일-시스템-Disk-based-File-System"><a href="#디스크-기반-파일-시스템-Disk-based-File-System" class="headerlink" title="디스크 기반 파일 시스템(Disk-based File System)"></a>디스크 기반 파일 시스템(Disk-based File System)</h2><p>디스크 기반 파일 시스템은 컴퓨터의 로컬 디스크에 파일을 저장하는 시스템입니다. 이는 물리적 저장 장치에 직접 접근하여 데이터를 읽고 쓰는 방식으로, 운영 체제에 의해 관리됩니다. 대표적인 디스크 기반 파일 시스템에는 NTFS, FAT32, ext4 등이 있습니다.</p>
+<h3 id="주요-특징-1"><a href="#주요-특징-1" class="headerlink" title="주요 특징"></a>주요 특징</h3><ul>
+<li><strong>로컬 저장</strong>: 파일이 로컬 디스크에 저장되어 빠른 접근 속도를 제공합니다.</li>
+<li><strong>보안</strong>: 로컬 디스크의 파일은 네트워크를 통해 접근할 수 없으므로 보안이 뛰어납니다.</li>
+<li><strong>제한된 공유</strong>: 파일을 공유하려면 네트워크 설정을 통해 공유 폴더를 만들어야 합니다.</li>
+</ul>
+<h3 id="디스크-기반-파일-시스템-상세-설명"><a href="#디스크-기반-파일-시스템-상세-설명" class="headerlink" title="디스크 기반 파일 시스템 상세 설명"></a>디스크 기반 파일 시스템 상세 설명</h3><p>디스크 기반 파일 시스템은 데이터를 효율적으로 저장하고 검색할 수 있도록 설계된 구조입니다. 각 파일 시스템은 고유의 구조와 알고리즘을 사용하여 파일과 디렉토리를 관리합니다.</p>
+<h4 id="주요-파일-시스템-종류"><a href="#주요-파일-시스템-종류" class="headerlink" title="주요 파일 시스템 종류"></a>주요 파일 시스템 종류</h4><ul>
+<li><strong>NTFS(New Technology File System)</strong>: 윈도우 NT 계열 운영 체제에서 사용되는 파일 시스템으로, 보안, 압축, 대용량 파일 지원 등의 기능이 있습니다.</li>
+<li><strong>FAT32(File Allocation Table 32)</strong>: 모든 운영 체제에서 호환이 가능하며, 작은 파일 시스템과 USB 드라이브에서 주로 사용됩니다.</li>
+<li><strong>ext4(Extended File System version 4)</strong>: 리눅스에서 주로 사용되는 파일 시스템으로, 저널링, 큰 파일 및 파일 시스템 지원, 향상된 성능 등의 기능이 있습니다.</li>
+</ul>
+<h4 id="파일-시스템의-주요-기능"><a href="#파일-시스템의-주요-기능" class="headerlink" title="파일 시스템의 주요 기능"></a>파일 시스템의 주요 기능</h4><ol>
+<li><strong>파일 저장 및 검색</strong>: 파일을 저장하고 필요할 때 빠르게 검색할 수 있도록 구조화된 데이터 저장 방식을 제공합니다.</li>
+<li><strong>디렉토리 구조</strong>: 파일을 계층 구조로 구성하여 조직화하고, 파일 간의 관계를 관리합니다.</li>
+<li><strong>보안 및 권한 관리</strong>: 사용자와 그룹별로 파일에 대한 접근 권한을 설정할 수 있습니다.</li>
+<li><strong>저널링</strong>: 시스템 충돌이나 전원 장애 시 데이터 손실을 방지하기 위해 변경 사항을 기록합니다.</li>
+<li><strong>에러 탐지 및 복구</strong>: 파일 시스템 오류를 탐지하고 복구하는 메커니즘을 포함합니다.</li>
+</ol>
+<h3 id="파일-시스템-비교"><a href="#파일-시스템-비교" class="headerlink" title="파일 시스템 비교"></a>파일 시스템 비교</h3><table>
+<thead>
+<tr>
+<th>파일 시스템</th>
+<th>주 사용 운영 체제</th>
+<th>최대 파일 크기</th>
+<th>저널링</th>
+<th>주요 특징</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>NTFS</td>
+<td>윈도우</td>
+<td>16EB</td>
+<td>예</td>
+<td>보안, 압축, 대용량 파일 지원</td>
+</tr>
+<tr>
+<td>FAT32</td>
+<td>윈도우, 리눅스, 맥</td>
+<td>4GB</td>
+<td>아니요</td>
+<td>높은 호환성, 작은 파일 시스템 적합</td>
+</tr>
+<tr>
+<td>ext4</td>
+<td>리눅스</td>
+<td>1EB</td>
+<td>예</td>
+<td>저널링, 큰 파일 및 파일 시스템 지원</td>
+</tr>
+</tbody></table>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%ED%8C%8C%EC%9D%BC%EC%8B%9C%EC%8A%A4%ED%85%9C/" rel="tag"># 파일시스템</a>
+              <a href="/tags/NFS/" rel="tag"># NFS</a>
+              <a href="/tags/NTFS/" rel="tag"># NTFS</a>
+              <a href="/tags/%EC%8A%A4%ED%86%A0%EB%A6%AC%EC%A7%80/" rel="tag"># 스토리지</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/07/07/understanding-public-private-key-encryption/" rel="prev" title="공개 키와 비밀 키 암호화 이해">
+      <i class="fa fa-chevron-left"></i> 공개 키와 비밀 키 암호화 이해
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/07/10/osi-7-layer-model-md/" rel="next" title="OSI 7 계층 모델">
+      OSI 7 계층 모델 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC-%EA%B8%B0%EB%B0%98-%ED%8C%8C%EC%9D%BC-%EC%8B%9C%EC%8A%A4%ED%85%9C-Network-based-File-System"><span class="nav-number">1.</span> <span class="nav-text">네트워크 기반 파일 시스템(Network-based File System)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EC%A3%BC%EC%9A%94-%ED%8A%B9%EC%A7%95"><span class="nav-number">1.1.</span> <span class="nav-text">주요 특징</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EB%94%94%EC%8A%A4%ED%81%AC-%EA%B8%B0%EB%B0%98-%ED%8C%8C%EC%9D%BC-%EC%8B%9C%EC%8A%A4%ED%85%9C-Disk-based-File-System"><span class="nav-number">2.</span> <span class="nav-text">디스크 기반 파일 시스템(Disk-based File System)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EC%A3%BC%EC%9A%94-%ED%8A%B9%EC%A7%95-1"><span class="nav-number">2.1.</span> <span class="nav-text">주요 특징</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EB%94%94%EC%8A%A4%ED%81%AC-%EA%B8%B0%EB%B0%98-%ED%8C%8C%EC%9D%BC-%EC%8B%9C%EC%8A%A4%ED%85%9C-%EC%83%81%EC%84%B8-%EC%84%A4%EB%AA%85"><span class="nav-number">2.2.</span> <span class="nav-text">디스크 기반 파일 시스템 상세 설명</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EC%A3%BC%EC%9A%94-%ED%8C%8C%EC%9D%BC-%EC%8B%9C%EC%8A%A4%ED%85%9C-%EC%A2%85%EB%A5%98"><span class="nav-number">2.2.1.</span> <span class="nav-text">주요 파일 시스템 종류</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%ED%8C%8C%EC%9D%BC-%EC%8B%9C%EC%8A%A4%ED%85%9C%EC%9D%98-%EC%A3%BC%EC%9A%94-%EA%B8%B0%EB%8A%A5"><span class="nav-number">2.2.2.</span> <span class="nav-text">파일 시스템의 주요 기능</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%ED%8C%8C%EC%9D%BC-%EC%8B%9C%EC%8A%A4%ED%85%9C-%EB%B9%84%EA%B5%90"><span class="nav-number">2.3.</span> <span class="nav-text">파일 시스템 비교</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://plus.google.com/yourname" title="Google → https:&#x2F;&#x2F;plus.google.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-google fa-fw"></i>Google</a>
+      </span>
+  </div>
+
+
+
+<div class="sidebar-panel sidebar-panel-active">
+  <div class="sidebar-panel-container">
+    <div class="sidebar-panel-header">
+      <i class="fa fa-cloud"></i>
+      <span class="sidebar-panel-title">날씨 정보</span>
+    </div>
+    <div class="weather-widget" id="weather-widget">
+      <div class="weather-loading" id="weather-loading">
+        <i class="fa fa-spinner fa-spin"></i>
+        <span>날씨 정보를 불러오는 중...</span>
+      </div>
+      <div class="weather-content" id="weather-content" style="display: none;">
+        <div class="weather-location" id="weather-location">
+          <i class="fa fa-map-marker-alt"></i>
+          <span id="weather-location-text">위치 확인 중...</span>
+        </div>
+        <div class="weather-current">
+          <div class="weather-main">
+            <div class="weather-icon" id="weather-icon"></div>
+            <div class="weather-temp" id="weather-temp"></div>
+          </div>
+          <div class="weather-description" id="weather-description"></div>
+          <div class="weather-details">
+            <div class="weather-detail">
+              <i class="fa fa-tint"></i>
+              <span>습도: </span>
+              <span id="weather-humidity"></span>
+            </div>
+            <div class="weather-detail">
+              <i class="fa fa-wind"></i>
+              <span>풍속: </span>
+              <span id="weather-wind"></span>
+            </div>
+          </div>
+        </div>
+        <div class="weather-forecast" id="weather-forecast">
+          <div class="forecast-title">
+            <i class="fa fa-calendar-alt"></i>
+            <span>3일 예보</span>
+          </div>
+          <div class="forecast-list" id="forecast-list"></div>
+        </div>
+        <div class="weather-update" id="weather-update"></div>
+      </div>
+      <div class="weather-error" id="weather-error" style="display: none;">
+        <i class="fa fa-exclamation-triangle"></i>
+        <span>날씨 정보를 불러올 수 없습니다.</span>
+      </div>
+    </div>
+  </div>
+</div>
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+// 날씨 위젯 초기화
+document.addEventListener('DOMContentLoaded', function() {
+  initWeatherWidget();
+});
+
+function initWeatherWidget() {
+  // 위치 정보를 가져와서 날씨 정보 표시
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      function(position) {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+        fetchWeatherByCoords(lat, lon);
+      },
+      function(error) {
+        console.log('위치 정보를 가져올 수 없습니다:', error);
+        // 기본값으로 서울 날씨 표시
+        fetchWeatherByCity('Seoul');
+      }
+    );
+  } else {
+    console.log('브라우저가 위치 정보를 지원하지 않습니다.');
+    // 기본값으로 서울 날씨 표시
+    fetchWeatherByCity('Seoul');
+  }
+}
+
+function fetchWeatherByCoords(lat, lon) {
+  // Open-Meteo API - 현재 날씨와 3일 예보 포함
+  const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&daily=temperature_2m_max,temperature_2m_min,weather_code&timezone=Asia/Seoul&forecast_days=4`;
+  
+  // 위치 정보 가져오기 (역지오코딩)
+  const geocodingUrl = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=ko`;
+  
+  Promise.all([
+    fetch(apiUrl).then(response => response.json()),
+    fetch(geocodingUrl).then(response => response.json())
+  ])
+    .then(([weatherData, locationData]) => {
+      displayWeather(weatherData, locationData);
+    })
+    .catch(error => {
+      console.error('날씨 정보를 가져오는데 실패했습니다:', error);
+      showWeatherError();
+    });
+}
+
+function fetchWeatherByCity(city) {
+  // 서울의 좌표로 기본 날씨 정보 가져오기
+  const lat = 37.5665;
+  const lon = 126.9780;
+  fetchWeatherByCoords(lat, lon);
+}
+
+function displayWeather(weatherData, locationData) {
+  const current = weatherData.current_weather;
+  const daily = weatherData.daily;
+  const loading = document.getElementById('weather-loading');
+  const content = document.getElementById('weather-content');
+  const error = document.getElementById('weather-error');
+  
+  if (!current) {
+    showWeatherError();
+    return;
+  }
+
+  // 로딩 숨기기, 콘텐츠 표시
+  loading.style.display = 'none';
+  error.style.display = 'none';
+  content.style.display = 'block';
+
+  // 위치 정보 표시
+  const locationText = getLocationText(locationData);
+  document.getElementById('weather-location-text').textContent = locationText;
+  
+  // 현재 날씨
+  document.getElementById('weather-temp').textContent = Math.round(current.temperature) + '°C';
+  
+  const weatherIcon = getWeatherIcon(current.weathercode, current.is_day);
+  document.getElementById('weather-icon').innerHTML = weatherIcon;
+  
+  const description = getWeatherDescription(current.weathercode);
+  document.getElementById('weather-description').textContent = description;
+  
+  document.getElementById('weather-wind').textContent = current.windspeed + ' km/h';
+  document.getElementById('weather-humidity').textContent = 'N/A';
+  
+  // 3일 예보 표시
+  displayForecast(daily);
+  
+  // 업데이트 시간
+  const updateTime = new Date().toLocaleTimeString('ko-KR');
+  document.getElementById('weather-update').textContent = `최종 업데이트: ${updateTime}`;
+}
+
+function getWeatherIcon(weatherCode, isDay) {
+  // WMO Weather Code를 기반으로 아이콘 반환
+  const iconMap = {
+    0: isDay ? '☀️' : '🌙', // Clear sky
+    1: isDay ? '🌤️' : '🌙', // Mainly clear
+    2: '⛅', // Partly cloudy
+    3: '☁️', // Overcast
+    45: '🌫️', // Fog
+    48: '🌫️', // Depositing rime fog
+    51: '🌦️', // Light drizzle
+    53: '🌦️', // Moderate drizzle
+    55: '🌦️', // Dense drizzle
+    61: '🌧️', // Slight rain
+    63: '🌧️', // Moderate rain
+    65: '🌧️', // Heavy rain
+    71: '🌨️', // Slight snow
+    73: '🌨️', // Moderate snow
+    75: '🌨️', // Heavy snow
+    77: '❄️', // Snow grains
+    80: '🌦️', // Slight rain showers
+    81: '🌧️', // Moderate rain showers
+    82: '🌧️', // Violent rain showers
+    85: '🌨️', // Slight snow showers
+    86: '🌨️', // Heavy snow showers
+    95: '⛈️', // Thunderstorm
+    96: '⛈️', // Thunderstorm with slight hail
+    99: '⛈️'  // Thunderstorm with heavy hail
+  };
+  
+  return iconMap[weatherCode] || '❓';
+}
+
+function getWeatherDescription(weatherCode) {
+  const descriptionMap = {
+    0: '맑음',
+    1: '대체로 맑음',
+    2: '부분적으로 흐림',
+    3: '흐림',
+    45: '안개',
+    48: '서리 안개',
+    51: '가벼운 이슬비',
+    53: '보통 이슬비',
+    55: '진한 이슬비',
+    61: '약한 비',
+    63: '보통 비',
+    65: '강한 비',
+    71: '약한 눈',
+    73: '보통 눈',
+    75: '강한 눈',
+    77: '눈알갱이',
+    80: '약한 소나기',
+    81: '보통 소나기',
+    82: '강한 소나기',
+    85: '약한 눈 소나기',
+    86: '강한 눈 소나기',
+    95: '뇌우',
+    96: '약한 우박을 동반한 뇌우',
+    99: '강한 우박을 동반한 뇌우'
+  };
+  
+  return descriptionMap[weatherCode] || '알 수 없음';
+}
+
+function getLocationText(locationData) {
+  if (!locationData) return '현재 위치';
+  
+  // 한국어 위치 정보 조합
+  let location = '';
+  if (locationData.city) {
+    location = locationData.city;
+  } else if (locationData.locality) {
+    location = locationData.locality;
+  } else if (locationData.countryName) {
+    location = locationData.countryName;
+  }
+  
+  // 구/군 정보 추가
+  if (locationData.principalSubdivision && location !== locationData.principalSubdivision) {
+    location = `${locationData.principalSubdivision} ${location}`;
+  }
+  
+  return location || '현재 위치';
+}
+
+function displayForecast(daily) {
+  if (!daily || !daily.time || daily.time.length < 4) return;
+  
+  const forecastList = document.getElementById('forecast-list');
+  forecastList.innerHTML = '';
+  
+  // 오늘 제외하고 3일간 예보 표시 (인덱스 1, 2, 3)
+  for (let i = 1; i <= 3; i++) {
+    const date = new Date(daily.time[i]);
+    const dayName = getDayName(date);
+    const weatherCode = daily.weather_code[i];
+    const maxTemp = Math.round(daily.temperature_2m_max[i]);
+    const minTemp = Math.round(daily.temperature_2m_min[i]);
+    
+    const forecastItem = document.createElement('div');
+    forecastItem.className = 'forecast-item';
+    
+    forecastItem.innerHTML = `
+      <div class="forecast-day">${dayName}</div>
+      <div class="forecast-weather">
+        <div class="forecast-icon">${getWeatherIcon(weatherCode, true)}</div>
+        <div class="forecast-desc">${getWeatherDescription(weatherCode)}</div>
+      </div>
+      <div class="forecast-temps">
+        <span class="temp-high">${maxTemp}°</span>
+        <span class="temp-low">${minTemp}°</span>
+      </div>
+    `;
+    
+    forecastList.appendChild(forecastItem);
+  }
+}
+
+function getDayName(date) {
+  const today = new Date();
+  const tomorrow = new Date(today);
+  tomorrow.setDate(today.getDate() + 1);
+  
+  if (date.toDateString() === today.toDateString()) {
+    return '오늘';
+  } else if (date.toDateString() === tomorrow.toDateString()) {
+    return '내일';
+  } else {
+    const days = ['일', '월', '화', '수', '목', '금', '토'];
+    return days[date.getDay()] + '요일';
+  }
+}
+
+function showWeatherError() {
+  const loading = document.getElementById('weather-loading');
+  const content = document.getElementById('weather-content');
+  const error = document.getElementById('weather-error');
+  
+  loading.style.display = 'none';
+  content.style.display = 'none';
+  error.style.display = 'block';
+}
+</script>
+</body>
+</html>
