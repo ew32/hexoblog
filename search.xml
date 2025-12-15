@@ -872,6 +872,7 @@
 <h3 id="플러그인-활성화"><a href="#플러그인-활성화" class="headerlink" title="플러그인 활성화"></a>플러그인 활성화</h3><p><code>~/.zshrc</code> 파일에서 플러그인 설정:</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">plugins=(git zsh-autosuggestions zsh-syntax-highlighting)</span><br></pre></td></tr></table></figure>
 
+<h3 id="초기화-코드-추가"><a href="#초기화-코드-추가" class="headerlink" title="초기화 코드 추가"></a>초기화 코드 추가</h3><p>eval “$(zoxide init zsh)”</p>
 <h3 id="설정-적용"><a href="#설정-적용" class="headerlink" title="설정 적용"></a>설정 적용</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br></pre></td></tr></table></figure>
 
 <hr>
