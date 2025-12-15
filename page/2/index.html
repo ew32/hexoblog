@@ -164,6 +164,156 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://ew32.github.io/2024/07/07/jpa-repository-vs-mapper-comparison/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/07/07/jpa-repository-vs-mapper-comparison/" class="post-title-link" itemprop="url">JPA 리포지토리와 매퍼 비교</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-07-07 16:09:30" itemprop="dateCreated datePublished" datetime="2024-07-07T16:09:30+09:00">2024-07-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-27 21:59:29" itemprop="dateModified" datetime="2025-08-27T21:59:29+09:00">2025-08-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Backend/" itemprop="url" rel="index"><span itemprop="name">Backend</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Backend/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Backend/Java/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="JPA에서-Repository와-Mapper-비교"><a href="#JPA에서-Repository와-Mapper-비교" class="headerlink" title="JPA에서 Repository와 Mapper 비교"></a>JPA에서 Repository와 Mapper 비교</h1><p>JPA (Java Persistence API)에서는 Repository와 Mapper 두 가지 주요 데이터 액세스 방법이 있으며, 어떤 것을 선택해야 하는지는 프로젝트의 요구 사항과 특성에 따라 다를 수 있습니다. 아래에서 Repository와 Mapper를 비교하고, Mapper를 사용하는 케이스에 대해 설명하겠습니다.</p>
+<h2 id="Repository"><a href="#Repository" class="headerlink" title="Repository"></a>Repository</h2><ul>
+<li><strong>Repository</strong>는 JPA를 기반으로 하는 ORM(Object-Relational Mapping) 기술을 사용하는 대표적인 방법입니다.</li>
+<li>JPA Repository를 사용하면 데이터베이스와 객체 간의 매핑을 자동으로 처리하므로, 객체 지향적인 방식으로 데이터를 다루기 용이합니다.</li>
+<li>CRUD(Create, Read, Update, Delete) 작업을 쉽게 수행할 수 있으며, Query Methods를 사용하여 복잡한 검색 쿼리를 생성할 수 있습니다.</li>
+<li>일반적으로 도메인 객체와 JPA 엔티티를 직접 사용하는 방식으로 데이터 액세스를 수행합니다.</li>
+</ul>
+<h2 id="Mapper"><a href="#Mapper" class="headerlink" title="Mapper"></a>Mapper</h2><ul>
+<li><strong>Mapper</strong>는 SQL 직접 사용이 가능하며, MyBatis와 같은 데이터베이스 액세스 프레임워크를 사용하는 방법입니다.</li>
+<li>Repository와는 다르게 SQL 쿼리를 직접 작성하고 매핑을 수동으로 처리해야 합니다.</li>
+<li>복잡한 SQL 쿼리를 작성하고 최적화할 때 유용하며, Repository로 처리하기 어려운 성능 최적화 작업을 수행할 수 있습니다.</li>
+<li>이미 존재하는 데이터베이스 스키마와의 통합이 필요한 경우나, 기존 프로젝트의 데이터 액세스 레이어를 대체할 때 사용하기 좋습니다.</li>
+</ul>
+<h2 id="Repository와-Mapper-비교"><a href="#Repository와-Mapper-비교" class="headerlink" title="Repository와 Mapper 비교"></a>Repository와 Mapper 비교</h2><table>
+<thead>
+<tr>
+<th>항목</th>
+<th>Repository</th>
+<th>Mapper</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>사용 기술</td>
+<td>JPA, Hibernate 등 ORM 프레임워크</td>
+<td>MyBatis 등 SQL 매퍼 프레임워크</td>
+</tr>
+<tr>
+<td>데이터 매핑 방식</td>
+<td>자동 매핑</td>
+<td>수동 매핑</td>
+</tr>
+<tr>
+<td>쿼리 작성 방식</td>
+<td>메서드 이름 기반, JPQL</td>
+<td>직접 SQL 작성</td>
+</tr>
+<tr>
+<td>CRUD 작업</td>
+<td>쉽게 수행 가능</td>
+<td>직접 쿼리 작성 필요</td>
+</tr>
+<tr>
+<td>성능 최적화</td>
+<td>ORM 최적화에 의존</td>
+<td>직접 최적화 가능</td>
+</tr>
+<tr>
+<td>복잡한 쿼리 처리</td>
+<td>어려울 수 있음</td>
+<td>유연하게 처리 가능</td>
+</tr>
+<tr>
+<td>기존 DB 스키마 통합</td>
+<td>제한적</td>
+<td>유연하게 통합 가능</td>
+</tr>
+<tr>
+<td>객체 지향적 접근</td>
+<td>강력한 객체 지향 지원</td>
+<td>SQL 중심 접근</td>
+</tr>
+</tbody></table>
+<h2 id="Mapper를-사용하는-케이스"><a href="#Mapper를-사용하는-케이스" class="headerlink" title="Mapper를 사용하는 케이스"></a>Mapper를 사용하는 케이스</h2><ol>
+<li><strong>복잡한 SQL 쿼리</strong>: 만약 프로젝트에서 복잡한 데이터베이스 쿼리를 자주 실행해야 하거나, 특정 비즈니스 로직에 맞춘 맞춤형 쿼리를 사용해야 하는 경우, Mapper를 사용하면 더 유연하게 대처할 수 있습니다.</li>
+<li><strong>레거시 시스템 통합</strong>: 이미 존재하는 데이터베이스와 통합해야 할 때, Mapper를 사용하여 기존 스키마와의 매핑을 수동으로 처리할 수 있습니다.</li>
+<li><strong>성능 최적화</strong>: Repository로는 성능 최적화를 수행하기 어려운 경우, Mapper를 사용하여 데이터베이스 액세스 작업을 최적화할 수 있습니다.</li>
+<li><strong>특정 데이터베이스 기능 활용</strong>: Mapper를 사용하면 특정 데이터베이스 특성을 직접 활용할 수 있으므로, 특정 데이터베이스에 종속적인 작업을 수행해야 하는 경우 유용합니다.</li>
+</ol>
+<h2 id="결론"><a href="#결론" class="headerlink" title="결론"></a>결론</h2><p>Repository와 Mapper를 혼합해서 사용하는 것도 가능합니다. 프로젝트의 요구 사항에 따라서 Repository를 사용하여 기본적인 데이터 액세스를 처리하고, Mapper를 사용하여 복잡한 쿼리나 특정 데이터베이스 작업을 수행하는 것도 가능합니다.</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://ew32.github.io/2024/07/07/semantic-html-tags-overview/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -284,92 +434,6 @@
 &lt;/body&gt;
 &lt;/html&gt;
 </code></pre>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://ew32.github.io/1970/01/01/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/1970/01/01/hello-world/" class="post-title-link" itemprop="url">헬로 월드</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 1970-01-01 09:00:00" itemprop="dateCreated datePublished" datetime="1970-01-01T09:00:00+09:00">1970-01-01</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-08-27 22:12:08" itemprop="dateModified" datetime="2025-08-27T22:12:08+09:00">2025-08-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Tutorial/" itemprop="url" rel="index"><span itemprop="name">Tutorial</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 
       
     </div>
