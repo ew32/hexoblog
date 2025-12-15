@@ -873,7 +873,7 @@
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">plugins=(git zsh-autosuggestions zsh-syntax-highlighting)</span><br></pre></td></tr></table></figure>
 
 <h3 id="초기화-코드-추가"><a href="#초기화-코드-추가" class="headerlink" title="초기화 코드 추가"></a>초기화 코드 추가</h3><p>eval “$(zoxide init zsh)”</p>
-<h3 id="설정-적용"><a href="#설정-적용" class="headerlink" title="설정 적용"></a>설정 적용</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br></pre></td></tr></table></figure>
+<h3 id="12345"><a href="#12345" class="headerlink" title="12345"></a>12345</h3><h3 id="설정-적용"><a href="#설정-적용" class="headerlink" title="설정 적용"></a>설정 적용</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br></pre></td></tr></table></figure>
 
 <hr>
 <h2 id="🐍-Python-환경-구축-Pyenv"><a href="#🐍-Python-환경-구축-Pyenv" class="headerlink" title="🐍 Python 환경 구축 (Pyenv)"></a>🐍 Python 환경 구축 (Pyenv)</h2><h3 id="Pyenv-의존성-설치"><a href="#Pyenv-의존성-설치" class="headerlink" title="Pyenv 의존성 설치"></a>Pyenv 의존성 설치</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt install -y make build-essential libssl-dev zlib1g-dev \</span><br><span class="line">libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \</span><br><span class="line">libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev git</span><br></pre></td></tr></table></figure>
