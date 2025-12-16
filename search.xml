@@ -43,6 +43,32 @@
       </tags>
   </entry>
   <entry>
+    <title>헬로 월드111</title>
+    <url>/2025/12/15/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+      <categories>
+        <category>Tutorial</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+        <tag>튜토리얼</tag>
+        <tag>시작하기</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>클라우드 컴퓨팅 개요</title>
     <url>/2024/07/20/cloud-computing-overview-md/</url>
     <content><![CDATA[<h1 id="클라우드-컴퓨팅의-이해"><a href="#클라우드-컴퓨팅의-이해" class="headerlink" title="클라우드 컴퓨팅의 이해"></a>클라우드 컴퓨팅의 이해</h1><h2 id="클라우드-컴퓨팅의-개념"><a href="#클라우드-컴퓨팅의-개념" class="headerlink" title="클라우드 컴퓨팅의 개념"></a>클라우드 컴퓨팅의 개념</h2><p>클라우드 컴퓨팅은 인터넷을 통해 서버, 저장소, 데이터베이스, 네트워크, 소프트웨어 등을 제공하는 기술이다. 이는 물리적 하드웨어 없이도 다양한 IT 자원을 필요에 따라 사용하고 관리할 수 있게 해준다.</p>
@@ -87,101 +113,58 @@
       </tags>
   </entry>
   <entry>
-    <title>네트워크 및 디스크 기반 파일 시스템</title>
-    <url>/2024/07/08/network-and-disk-based-file-systems-md/</url>
-    <content><![CDATA[<h2 id="네트워크-기반-파일-시스템-Network-based-File-System"><a href="#네트워크-기반-파일-시스템-Network-based-File-System" class="headerlink" title="네트워크 기반 파일 시스템(Network-based File System)"></a>네트워크 기반 파일 시스템(Network-based File System)</h2><p>네트워크 기반 파일 시스템은 파일이 로컬 디스크가 아닌 네트워크에 연결된 서버에 저장되는 시스템입니다. 사용자와 애플리케이션은 파일이 로컬에 있는 것처럼 접근할 수 있지만 실제 파일은 네트워크를 통해 접근됩니다. 대표적인 네트워크 기반 파일 시스템으로는 NFS(Network File System), SMB(Server Message Block), 그리고 DFS(Distributed File System) 등이 있습니다.</p>
-<h3 id="주요-특징"><a href="#주요-특징" class="headerlink" title="주요 특징"></a>주요 특징</h3><ul>
-<li><strong>중앙 집중식 저장</strong>: 모든 파일이 중앙 서버에 저장되어 관리가 용이합니다.</li>
-<li><strong>데이터 공유</strong>: 여러 클라이언트가 같은 파일을 공유할 수 있어 협업이 용이합니다.</li>
-<li><strong>확장성</strong>: 스토리지 용량을 쉽게 확장할 수 있습니다.</li>
+    <title>MoneyPrinter AI 비디오 생성 도구 설치</title>
+    <url>/2025/10/22/moneyprinter-installation/</url>
+    <content><![CDATA[<p>WSL Ubuntu 환경에서 MoneyPrinter AI 비디오 생성 도구를 설치하는 과정입니다.</p>
+<h2 id="📌-사전-요구사항"><a href="#📌-사전-요구사항" class="headerlink" title="📌 사전 요구사항"></a>📌 사전 요구사항</h2><ul>
+<li>WSL Ubuntu 24.04</li>
+<li>Python 3.11.9 (Pyenv 설치)</li>
+<li>Git</li>
 </ul>
-<h2 id="디스크-기반-파일-시스템-Disk-based-File-System"><a href="#디스크-기반-파일-시스템-Disk-based-File-System" class="headerlink" title="디스크 기반 파일 시스템(Disk-based File System)"></a>디스크 기반 파일 시스템(Disk-based File System)</h2><p>디스크 기반 파일 시스템은 컴퓨터의 로컬 디스크에 파일을 저장하는 시스템입니다. 이는 물리적 저장 장치에 직접 접근하여 데이터를 읽고 쓰는 방식으로, 운영 체제에 의해 관리됩니다. 대표적인 디스크 기반 파일 시스템에는 NTFS, FAT32, ext4 등이 있습니다.</p>
-<h3 id="주요-특징-1"><a href="#주요-특징-1" class="headerlink" title="주요 특징"></a>주요 특징</h3><ul>
-<li><strong>로컬 저장</strong>: 파일이 로컬 디스크에 저장되어 빠른 접근 속도를 제공합니다.</li>
-<li><strong>보안</strong>: 로컬 디스크의 파일은 네트워크를 통해 접근할 수 없으므로 보안이 뛰어납니다.</li>
-<li><strong>제한된 공유</strong>: 파일을 공유하려면 네트워크 설정을 통해 공유 폴더를 만들어야 합니다.</li>
+<blockquote>
+<p>개발 환경 구축은 <a href="/wsl-ubuntu-dev-environment">이전 포스트</a> 참고</p>
+</blockquote>
+<hr>
+<h2 id="📥-MoneyPrinter-설치"><a href="#📥-MoneyPrinter-설치" class="headerlink" title="📥 MoneyPrinter 설치"></a>📥 MoneyPrinter 설치</h2><h3 id="저장소-클론"><a href="#저장소-클론" class="headerlink" title="저장소 클론"></a>저장소 클론</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/FujiwaraChoki/MoneyPrinterV2.git</span><br><span class="line"><span class="built_in">cd</span> MoneyPrinterV2</span><br></pre></td></tr></table></figure>
+
+<h3 id="Python-버전-설정-및-가상환경-생성"><a href="#Python-버전-설정-및-가상환경-생성" class="headerlink" title="Python 버전 설정 및 가상환경 생성"></a>Python 버전 설정 및 가상환경 생성</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pyenv <span class="built_in">local</span> 3.11.9</span><br><span class="line">python -m venv venv</span><br><span class="line"><span class="built_in">source</span> venv/bin/activate</span><br></pre></td></tr></table></figure>
+
+<h3 id="의존성-설치"><a href="#의존성-설치" class="headerlink" title="의존성 설치"></a>의존성 설치</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pip install -r requirements.txt</span><br><span class="line">pip install g4f==0.5.0.1</span><br><span class="line">pip install moviepy==1.0.3</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="🦊-Firefox-설치"><a href="#🦊-Firefox-설치" class="headerlink" title="🦊 Firefox 설치"></a>🦊 Firefox 설치</h2><p>MoneyPrinter는 Firefox를 사용하므로 수동 설치 필요</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /opt</span><br><span class="line"><span class="built_in">sudo</span> wget https://download.mozilla.org/?product=firefox-latest-ssl&amp;os=linux64&amp;lang=en-US -O firefox.tar.xz</span><br><span class="line"><span class="built_in">sudo</span> tar xf firefox.tar.xz</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">ln</span> -s /opt/firefox/firefox /usr/local/bin/firefox</span><br></pre></td></tr></table></figure>
+
+<h3 id="오디오-라이브러리-설치"><a href="#오디오-라이브러리-설치" class="headerlink" title="오디오 라이브러리 설치"></a>오디오 라이브러리 설치</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt install libasound2t64</span><br><span class="line"><span class="built_in">sudo</span> apt install libdbus-glib-1-2</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="🎨-ImageMagick-설정"><a href="#🎨-ImageMagick-설정" class="headerlink" title="🎨 ImageMagick 설정"></a>🎨 ImageMagick 설정</h2><h3 id="ImageMagick-설치"><a href="#ImageMagick-설치" class="headerlink" title="ImageMagick 설치"></a>ImageMagick 설치</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt install imagemagick</span><br></pre></td></tr></table></figure>
+
+<h3 id="정책-파일-수정"><a href="#정책-파일-수정" class="headerlink" title="정책 파일 수정"></a>정책 파일 수정</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> nano /etc/ImageMagick-6/policy.xml</span><br></pre></td></tr></table></figure>
+
+<p>파일 내에 다음 라인 추가:</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">policy</span> <span class="attr">domain</span>=<span class="string">&quot;path&quot;</span> <span class="attr">rights</span>=<span class="string">&quot;read|write&quot;</span> <span class="attr">pattern</span>=<span class="string">&quot;@*&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="✅-실행"><a href="#✅-실행" class="headerlink" title="✅ 실행"></a>✅ 실행</h2><p>MoneyPrinter 실행:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/MoneyPrinterV2</span><br><span class="line"><span class="built_in">source</span> venv/bin/activate</span><br><span class="line">python main.py</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="💡-참고"><a href="#💡-참고" class="headerlink" title="💡 참고"></a>💡 참고</h2><ul>
+<li>g4f 버전은 0.5.0.1로 고정 (최신 버전 호환성 문제)</li>
+<li>moviepy 버전은 1.0.3 사용 권장</li>
+<li>ImageMagick 정책 수정은 비디오 생성에 필요</li>
 </ul>
-<h3 id="디스크-기반-파일-시스템-상세-설명"><a href="#디스크-기반-파일-시스템-상세-설명" class="headerlink" title="디스크 기반 파일 시스템 상세 설명"></a>디스크 기반 파일 시스템 상세 설명</h3><p>디스크 기반 파일 시스템은 데이터를 효율적으로 저장하고 검색할 수 있도록 설계된 구조입니다. 각 파일 시스템은 고유의 구조와 알고리즘을 사용하여 파일과 디렉토리를 관리합니다.</p>
-<h4 id="주요-파일-시스템-종류"><a href="#주요-파일-시스템-종류" class="headerlink" title="주요 파일 시스템 종류"></a>주요 파일 시스템 종류</h4><ul>
-<li><strong>NTFS(New Technology File System)</strong>: 윈도우 NT 계열 운영 체제에서 사용되는 파일 시스템으로, 보안, 압축, 대용량 파일 지원 등의 기능이 있습니다.</li>
-<li><strong>FAT32(File Allocation Table 32)</strong>: 모든 운영 체제에서 호환이 가능하며, 작은 파일 시스템과 USB 드라이브에서 주로 사용됩니다.</li>
-<li><strong>ext4(Extended File System version 4)</strong>: 리눅스에서 주로 사용되는 파일 시스템으로, 저널링, 큰 파일 및 파일 시스템 지원, 향상된 성능 등의 기능이 있습니다.</li>
-</ul>
-<h4 id="파일-시스템의-주요-기능"><a href="#파일-시스템의-주요-기능" class="headerlink" title="파일 시스템의 주요 기능"></a>파일 시스템의 주요 기능</h4><ol>
-<li><strong>파일 저장 및 검색</strong>: 파일을 저장하고 필요할 때 빠르게 검색할 수 있도록 구조화된 데이터 저장 방식을 제공합니다.</li>
-<li><strong>디렉토리 구조</strong>: 파일을 계층 구조로 구성하여 조직화하고, 파일 간의 관계를 관리합니다.</li>
-<li><strong>보안 및 권한 관리</strong>: 사용자와 그룹별로 파일에 대한 접근 권한을 설정할 수 있습니다.</li>
-<li><strong>저널링</strong>: 시스템 충돌이나 전원 장애 시 데이터 손실을 방지하기 위해 변경 사항을 기록합니다.</li>
-<li><strong>에러 탐지 및 복구</strong>: 파일 시스템 오류를 탐지하고 복구하는 메커니즘을 포함합니다.</li>
-</ol>
-<h3 id="파일-시스템-비교"><a href="#파일-시스템-비교" class="headerlink" title="파일 시스템 비교"></a>파일 시스템 비교</h3><table>
-<thead>
-<tr>
-<th>파일 시스템</th>
-<th>주 사용 운영 체제</th>
-<th>최대 파일 크기</th>
-<th>저널링</th>
-<th>주요 특징</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>NTFS</td>
-<td>윈도우</td>
-<td>16EB</td>
-<td>예</td>
-<td>보안, 압축, 대용량 파일 지원</td>
-</tr>
-<tr>
-<td>FAT32</td>
-<td>윈도우, 리눅스, 맥</td>
-<td>4GB</td>
-<td>아니요</td>
-<td>높은 호환성, 작은 파일 시스템 적합</td>
-</tr>
-<tr>
-<td>ext4</td>
-<td>리눅스</td>
-<td>1EB</td>
-<td>예</td>
-<td>저널링, 큰 파일 및 파일 시스템 지원</td>
-</tr>
-</tbody></table>
 ]]></content>
       <categories>
-        <category>System</category>
-        <category>Storage</category>
+        <category>AI도구</category>
       </categories>
       <tags>
-        <tag>파일시스템</tag>
-        <tag>NFS</tag>
-        <tag>NTFS</tag>
-        <tag>스토리지</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>헬로 월드111</title>
-    <url>/2025/12/15/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-      <categories>
-        <category>Tutorial</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-        <tag>튜토리얼</tag>
-        <tag>시작하기</tag>
+        <tag>MoneyPrinter</tag>
+        <tag>AI</tag>
+        <tag>Python</tag>
+        <tag>Ubuntu</tag>
+        <tag>WSL</tag>
       </tags>
   </entry>
   <entry>
@@ -371,6 +354,78 @@
         <tag>스케줄링</tag>
         <tag>알고리즘</tag>
         <tag>CPU</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>네트워크 및 디스크 기반 파일 시스템</title>
+    <url>/2024/07/08/network-and-disk-based-file-systems-md/</url>
+    <content><![CDATA[<h2 id="네트워크-기반-파일-시스템-Network-based-File-System"><a href="#네트워크-기반-파일-시스템-Network-based-File-System" class="headerlink" title="네트워크 기반 파일 시스템(Network-based File System)"></a>네트워크 기반 파일 시스템(Network-based File System)</h2><p>네트워크 기반 파일 시스템은 파일이 로컬 디스크가 아닌 네트워크에 연결된 서버에 저장되는 시스템입니다. 사용자와 애플리케이션은 파일이 로컬에 있는 것처럼 접근할 수 있지만 실제 파일은 네트워크를 통해 접근됩니다. 대표적인 네트워크 기반 파일 시스템으로는 NFS(Network File System), SMB(Server Message Block), 그리고 DFS(Distributed File System) 등이 있습니다.</p>
+<h3 id="주요-특징"><a href="#주요-특징" class="headerlink" title="주요 특징"></a>주요 특징</h3><ul>
+<li><strong>중앙 집중식 저장</strong>: 모든 파일이 중앙 서버에 저장되어 관리가 용이합니다.</li>
+<li><strong>데이터 공유</strong>: 여러 클라이언트가 같은 파일을 공유할 수 있어 협업이 용이합니다.</li>
+<li><strong>확장성</strong>: 스토리지 용량을 쉽게 확장할 수 있습니다.</li>
+</ul>
+<h2 id="디스크-기반-파일-시스템-Disk-based-File-System"><a href="#디스크-기반-파일-시스템-Disk-based-File-System" class="headerlink" title="디스크 기반 파일 시스템(Disk-based File System)"></a>디스크 기반 파일 시스템(Disk-based File System)</h2><p>디스크 기반 파일 시스템은 컴퓨터의 로컬 디스크에 파일을 저장하는 시스템입니다. 이는 물리적 저장 장치에 직접 접근하여 데이터를 읽고 쓰는 방식으로, 운영 체제에 의해 관리됩니다. 대표적인 디스크 기반 파일 시스템에는 NTFS, FAT32, ext4 등이 있습니다.</p>
+<h3 id="주요-특징-1"><a href="#주요-특징-1" class="headerlink" title="주요 특징"></a>주요 특징</h3><ul>
+<li><strong>로컬 저장</strong>: 파일이 로컬 디스크에 저장되어 빠른 접근 속도를 제공합니다.</li>
+<li><strong>보안</strong>: 로컬 디스크의 파일은 네트워크를 통해 접근할 수 없으므로 보안이 뛰어납니다.</li>
+<li><strong>제한된 공유</strong>: 파일을 공유하려면 네트워크 설정을 통해 공유 폴더를 만들어야 합니다.</li>
+</ul>
+<h3 id="디스크-기반-파일-시스템-상세-설명"><a href="#디스크-기반-파일-시스템-상세-설명" class="headerlink" title="디스크 기반 파일 시스템 상세 설명"></a>디스크 기반 파일 시스템 상세 설명</h3><p>디스크 기반 파일 시스템은 데이터를 효율적으로 저장하고 검색할 수 있도록 설계된 구조입니다. 각 파일 시스템은 고유의 구조와 알고리즘을 사용하여 파일과 디렉토리를 관리합니다.</p>
+<h4 id="주요-파일-시스템-종류"><a href="#주요-파일-시스템-종류" class="headerlink" title="주요 파일 시스템 종류"></a>주요 파일 시스템 종류</h4><ul>
+<li><strong>NTFS(New Technology File System)</strong>: 윈도우 NT 계열 운영 체제에서 사용되는 파일 시스템으로, 보안, 압축, 대용량 파일 지원 등의 기능이 있습니다.</li>
+<li><strong>FAT32(File Allocation Table 32)</strong>: 모든 운영 체제에서 호환이 가능하며, 작은 파일 시스템과 USB 드라이브에서 주로 사용됩니다.</li>
+<li><strong>ext4(Extended File System version 4)</strong>: 리눅스에서 주로 사용되는 파일 시스템으로, 저널링, 큰 파일 및 파일 시스템 지원, 향상된 성능 등의 기능이 있습니다.</li>
+</ul>
+<h4 id="파일-시스템의-주요-기능"><a href="#파일-시스템의-주요-기능" class="headerlink" title="파일 시스템의 주요 기능"></a>파일 시스템의 주요 기능</h4><ol>
+<li><strong>파일 저장 및 검색</strong>: 파일을 저장하고 필요할 때 빠르게 검색할 수 있도록 구조화된 데이터 저장 방식을 제공합니다.</li>
+<li><strong>디렉토리 구조</strong>: 파일을 계층 구조로 구성하여 조직화하고, 파일 간의 관계를 관리합니다.</li>
+<li><strong>보안 및 권한 관리</strong>: 사용자와 그룹별로 파일에 대한 접근 권한을 설정할 수 있습니다.</li>
+<li><strong>저널링</strong>: 시스템 충돌이나 전원 장애 시 데이터 손실을 방지하기 위해 변경 사항을 기록합니다.</li>
+<li><strong>에러 탐지 및 복구</strong>: 파일 시스템 오류를 탐지하고 복구하는 메커니즘을 포함합니다.</li>
+</ol>
+<h3 id="파일-시스템-비교"><a href="#파일-시스템-비교" class="headerlink" title="파일 시스템 비교"></a>파일 시스템 비교</h3><table>
+<thead>
+<tr>
+<th>파일 시스템</th>
+<th>주 사용 운영 체제</th>
+<th>최대 파일 크기</th>
+<th>저널링</th>
+<th>주요 특징</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>NTFS</td>
+<td>윈도우</td>
+<td>16EB</td>
+<td>예</td>
+<td>보안, 압축, 대용량 파일 지원</td>
+</tr>
+<tr>
+<td>FAT32</td>
+<td>윈도우, 리눅스, 맥</td>
+<td>4GB</td>
+<td>아니요</td>
+<td>높은 호환성, 작은 파일 시스템 적합</td>
+</tr>
+<tr>
+<td>ext4</td>
+<td>리눅스</td>
+<td>1EB</td>
+<td>예</td>
+<td>저널링, 큰 파일 및 파일 시스템 지원</td>
+</tr>
+</tbody></table>
+]]></content>
+      <categories>
+        <category>System</category>
+        <category>Storage</category>
+      </categories>
+      <tags>
+        <tag>파일시스템</tag>
+        <tag>NFS</tag>
+        <tag>NTFS</tag>
+        <tag>스토리지</tag>
       </tags>
   </entry>
   <entry>
@@ -682,37 +737,6 @@
       </tags>
   </entry>
   <entry>
-    <title>공개 키와 비밀 키 암호화 이해</title>
-    <url>/2024/07/07/understanding-public-private-key-encryption/</url>
-    <content><![CDATA[<h1 id="공개키와-개인키-암호화에-대한-이해"><a href="#공개키와-개인키-암호화에-대한-이해" class="headerlink" title="공개키와 개인키 암호화에 대한 이해"></a>공개키와 개인키 암호화에 대한 이해</h1><p>공개키 암호화는 데이터를 안전하게 전송하고, 디지털 서명을 생성하는 데 중요한 비대칭 키 암호화 방식입니다. 이 방식은 공개키와 개인키라는 두 개의 키를 사용하여 작동합니다.</p>
-<h2 id="공개키-Public-Key"><a href="#공개키-Public-Key" class="headerlink" title="공개키 (Public Key)"></a>공개키 (Public Key)</h2><ul>
-<li><strong>접근성</strong>: 누구에게나 공개 가능한 키입니다.</li>
-<li><strong>용도</strong>: 데이터 암호화에 사용됩니다.</li>
-<li><strong>보안 수준</strong>: 높은 수준의 보안을 제공합니다.</li>
-<li><strong>키의 생성</strong>: 키 쌍을 생성할 때 자동으로 생성됩니다.</li>
-<li><strong>저장 위치</strong>: 공개 서버, 인증서 등에 저장됩니다.</li>
-</ul>
-<h2 id="개인키-Private-Key"><a href="#개인키-Private-Key" class="headerlink" title="개인키 (Private Key)"></a>개인키 (Private Key)</h2><ul>
-<li><strong>접근성</strong>: 소유자만 비밀로 유지해야 하는 키입니다.</li>
-<li><strong>용도</strong>: 데이터 복호화 및 디지털 서명 생성에 사용됩니다.</li>
-<li><strong>보안 수준</strong>: 매우 높은 수준의 보안이 필요합니다.</li>
-<li><strong>키의 생성</strong>: 키 쌍을 생성할 때 자동으로 생성됩니다.</li>
-<li><strong>저장 위치</strong>: 개인 디바이스나 안전한 저장소에 저장됩니다.</li>
-</ul>
-<p>공개키 암호화는 데이터의 기밀성과 무결성을 유지하며, 네트워크 상에서 안전한 통신을 가능하게 합니다. 이 방식은 인터넷 보안, 전자상거래, 디지털 서명 등 다양한 분야에서 중요한 역할을 합니다.</p>
-]]></content>
-      <categories>
-        <category>Security</category>
-        <category>Cryptography</category>
-      </categories>
-      <tags>
-        <tag>보안</tag>
-        <tag>암호화</tag>
-        <tag>공개키</tag>
-        <tag>PKI</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>시맨틱 HTML 태그 개요</title>
     <url>/2024/07/07/semantic-html-tags-overview/</url>
     <content><![CDATA[<h1 id="시맨틱-HTML-태그-소개"><a href="#시맨틱-HTML-태그-소개" class="headerlink" title="시맨틱 HTML 태그 소개"></a>시맨틱 HTML 태그 소개</h1><p>시맨틱(semantic) HTML 태그는 웹 문서의 구조와 의미를 명확히 전달하기 위해 사용됩니다. 이러한 태그들은 검색 엔진 최적화(SEO)와 웹 접근성을 향상시키는 데 도움을 줍니다. 대표적인 시맨틱 HTML 태그를 살펴보겠습니다.</p>
@@ -790,61 +814,6 @@
       </tags>
   </entry>
   <entry>
-    <title>MoneyPrinter AI 비디오 생성 도구 설치</title>
-    <url>/2025/10/22/moneyprinter-installation/</url>
-    <content><![CDATA[<p>WSL Ubuntu 환경에서 MoneyPrinter AI 비디오 생성 도구를 설치하는 과정입니다.</p>
-<h2 id="📌-사전-요구사항"><a href="#📌-사전-요구사항" class="headerlink" title="📌 사전 요구사항"></a>📌 사전 요구사항</h2><ul>
-<li>WSL Ubuntu 24.04</li>
-<li>Python 3.11.9 (Pyenv 설치)</li>
-<li>Git</li>
-</ul>
-<blockquote>
-<p>개발 환경 구축은 <a href="/wsl-ubuntu-dev-environment">이전 포스트</a> 참고</p>
-</blockquote>
-<hr>
-<h2 id="📥-MoneyPrinter-설치"><a href="#📥-MoneyPrinter-설치" class="headerlink" title="📥 MoneyPrinter 설치"></a>📥 MoneyPrinter 설치</h2><h3 id="저장소-클론"><a href="#저장소-클론" class="headerlink" title="저장소 클론"></a>저장소 클론</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/FujiwaraChoki/MoneyPrinterV2.git</span><br><span class="line"><span class="built_in">cd</span> MoneyPrinterV2</span><br></pre></td></tr></table></figure>
-
-<h3 id="Python-버전-설정-및-가상환경-생성"><a href="#Python-버전-설정-및-가상환경-생성" class="headerlink" title="Python 버전 설정 및 가상환경 생성"></a>Python 버전 설정 및 가상환경 생성</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pyenv <span class="built_in">local</span> 3.11.9</span><br><span class="line">python -m venv venv</span><br><span class="line"><span class="built_in">source</span> venv/bin/activate</span><br></pre></td></tr></table></figure>
-
-<h3 id="의존성-설치"><a href="#의존성-설치" class="headerlink" title="의존성 설치"></a>의존성 설치</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pip install -r requirements.txt</span><br><span class="line">pip install g4f==0.5.0.1</span><br><span class="line">pip install moviepy==1.0.3</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="🦊-Firefox-설치"><a href="#🦊-Firefox-설치" class="headerlink" title="🦊 Firefox 설치"></a>🦊 Firefox 설치</h2><p>MoneyPrinter는 Firefox를 사용하므로 수동 설치 필요</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /opt</span><br><span class="line"><span class="built_in">sudo</span> wget https://download.mozilla.org/?product=firefox-latest-ssl&amp;os=linux64&amp;lang=en-US -O firefox.tar.xz</span><br><span class="line"><span class="built_in">sudo</span> tar xf firefox.tar.xz</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">ln</span> -s /opt/firefox/firefox /usr/local/bin/firefox</span><br></pre></td></tr></table></figure>
-
-<h3 id="오디오-라이브러리-설치"><a href="#오디오-라이브러리-설치" class="headerlink" title="오디오 라이브러리 설치"></a>오디오 라이브러리 설치</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt install libasound2t64</span><br><span class="line"><span class="built_in">sudo</span> apt install libdbus-glib-1-2</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="🎨-ImageMagick-설정"><a href="#🎨-ImageMagick-설정" class="headerlink" title="🎨 ImageMagick 설정"></a>🎨 ImageMagick 설정</h2><h3 id="ImageMagick-설치"><a href="#ImageMagick-설치" class="headerlink" title="ImageMagick 설치"></a>ImageMagick 설치</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt install imagemagick</span><br></pre></td></tr></table></figure>
-
-<h3 id="정책-파일-수정"><a href="#정책-파일-수정" class="headerlink" title="정책 파일 수정"></a>정책 파일 수정</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> nano /etc/ImageMagick-6/policy.xml</span><br></pre></td></tr></table></figure>
-
-<p>파일 내에 다음 라인 추가:</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">policy</span> <span class="attr">domain</span>=<span class="string">&quot;path&quot;</span> <span class="attr">rights</span>=<span class="string">&quot;read|write&quot;</span> <span class="attr">pattern</span>=<span class="string">&quot;@*&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="✅-실행"><a href="#✅-실행" class="headerlink" title="✅ 실행"></a>✅ 실행</h2><p>MoneyPrinter 실행:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/MoneyPrinterV2</span><br><span class="line"><span class="built_in">source</span> venv/bin/activate</span><br><span class="line">python main.py</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="💡-참고"><a href="#💡-참고" class="headerlink" title="💡 참고"></a>💡 참고</h2><ul>
-<li>g4f 버전은 0.5.0.1로 고정 (최신 버전 호환성 문제)</li>
-<li>moviepy 버전은 1.0.3 사용 권장</li>
-<li>ImageMagick 정책 수정은 비디오 생성에 필요</li>
-</ul>
-]]></content>
-      <categories>
-        <category>AI도구</category>
-      </categories>
-      <tags>
-        <tag>MoneyPrinter</tag>
-        <tag>AI</tag>
-        <tag>Python</tag>
-        <tag>Ubuntu</tag>
-        <tag>WSL</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>WSL Ubuntu 개발 환경 구축 (Zsh + Pyenv)</title>
     <url>/2025/10/22/wsl-ubuntu-dev-environment/</url>
     <content><![CDATA[<p>WSL Ubuntu 24.04에서 Zsh 터미널과 Python 개발 환경을 구축하는 과정입니다.</p>
@@ -899,6 +868,37 @@
         <tag>WSL</tag>
         <tag>Zsh</tag>
         <tag>Pyenv</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>공개 키와 비밀 키 암호화 이해</title>
+    <url>/2024/07/07/understanding-public-private-key-encryption/</url>
+    <content><![CDATA[<h1 id="공개키와-개인키-암호화에-대한-이해"><a href="#공개키와-개인키-암호화에-대한-이해" class="headerlink" title="공개키와 개인키 암호화에 대한 이해"></a>공개키와 개인키 암호화에 대한 이해</h1><p>공개키 암호화는 데이터를 안전하게 전송하고, 디지털 서명을 생성하는 데 중요한 비대칭 키 암호화 방식입니다. 이 방식은 공개키와 개인키라는 두 개의 키를 사용하여 작동합니다.</p>
+<h2 id="공개키-Public-Key"><a href="#공개키-Public-Key" class="headerlink" title="공개키 (Public Key)"></a>공개키 (Public Key)</h2><ul>
+<li><strong>접근성</strong>: 누구에게나 공개 가능한 키입니다.</li>
+<li><strong>용도</strong>: 데이터 암호화에 사용됩니다.</li>
+<li><strong>보안 수준</strong>: 높은 수준의 보안을 제공합니다.</li>
+<li><strong>키의 생성</strong>: 키 쌍을 생성할 때 자동으로 생성됩니다.</li>
+<li><strong>저장 위치</strong>: 공개 서버, 인증서 등에 저장됩니다.</li>
+</ul>
+<h2 id="개인키-Private-Key"><a href="#개인키-Private-Key" class="headerlink" title="개인키 (Private Key)"></a>개인키 (Private Key)</h2><ul>
+<li><strong>접근성</strong>: 소유자만 비밀로 유지해야 하는 키입니다.</li>
+<li><strong>용도</strong>: 데이터 복호화 및 디지털 서명 생성에 사용됩니다.</li>
+<li><strong>보안 수준</strong>: 매우 높은 수준의 보안이 필요합니다.</li>
+<li><strong>키의 생성</strong>: 키 쌍을 생성할 때 자동으로 생성됩니다.</li>
+<li><strong>저장 위치</strong>: 개인 디바이스나 안전한 저장소에 저장됩니다.</li>
+</ul>
+<p>공개키 암호화는 데이터의 기밀성과 무결성을 유지하며, 네트워크 상에서 안전한 통신을 가능하게 합니다. 이 방식은 인터넷 보안, 전자상거래, 디지털 서명 등 다양한 분야에서 중요한 역할을 합니다.</p>
+]]></content>
+      <categories>
+        <category>Security</category>
+        <category>Cryptography</category>
+      </categories>
+      <tags>
+        <tag>보안</tag>
+        <tag>암호화</tag>
+        <tag>공개키</tag>
+        <tag>PKI</tag>
       </tags>
   </entry>
 </search>
